@@ -1,9 +1,9 @@
 //
-//  Tweet.m
-//  twitter
+//  TweetCell.m
+//  tweetly
 //
-//  Created by Timothy Lee on 8/5/13.
-//  Copyright (c) 2013 codepath. All rights reserved.
+//  Created by Anna Do on 03/28/14.
+//  Copyright (c) 2014 Anna Do. All rights reserved.
 //
 
 #import "Tweet.h"
@@ -11,35 +11,27 @@
 @implementation Tweet
 
 - (NSDate *)date {
-    NSString *date = [self.data valueOrNilForKeyPath:@"created_at"];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    return [formatter dateFromString:date];
+    return nil;
 }
 
 - (NSString *)text {
-    return [self.data valueOrNilForKeyPath:@"text"];
+    return @"";
 }
 
 - (NSString *)name {
-    return [self.data valueOrNilForKeyPath:@"user.name"];
+    return @"";
 }
 
 - (NSString *)username {
-    return [self.data valueOrNilForKeyPath:@"user.screen_name"];
+    return @"";
 }
 
 - (NSInteger)retweetCount {
-    NSString *countStr = (NSString *)[self.data valueOrNilForKeyPath:@"retweet_count"];
-    NSInteger count = countStr.integerValue;
-    NSLog(@"RetweetCount: %ld", count);
-    return count;
+    return 0;
 }
 
 + (NSMutableArray *)tweetsWithArray:(NSArray *)array {
     NSMutableArray *tweets = [[NSMutableArray alloc] initWithCapacity:array.count];
-    for (NSDictionary *params in array) {
-        [tweets addObject:[[Tweet alloc] initWithDictionary:params]];
-    }
     return tweets;
 }
 

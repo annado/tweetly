@@ -1,9 +1,9 @@
 //
-//  TweetCell.h
-//  twitter
+//  TweetCell.m
+//  tweetly
 //
-//  Created by Timothy Lee on 8/6/13.
-//  Copyright (c) 2013 codepath. All rights reserved.
+//  Created by Anna Do on 03/28/14.
+//  Copyright (c) 2014 Anna Do. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
