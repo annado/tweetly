@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "TwitterClient.h"
+#import "SignInViewController.h"
+#import "NSDictionary+BDBOAuth1Manager.h"
+#import "User.h"
 
 @implementation AppDelegate
 
@@ -14,6 +18,12 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    SignInViewController *signInVC = [[SignInViewController alloc] init];
+    self.window.rootViewController = signInVC;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRootViewController) name:UserDidLoginNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRootViewController) name:UserDidLogoutNotification object:nil];
+
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
@@ -44,6 +54,29 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    if ([url.scheme isEqualToString:@"tweetly"]) {
+        if ([url.host isEqualToString:@"oauth"]) {
+            NSDictionary *parameters = [NSDictionary dictionaryFromQueryString:url.query];
+            
+            if (parameters[@"oauth_token"] && parameters[@"oauth_verifier"]) {
+                [[TwitterClient instance] currentUserWithQuery:url.query success:^(User *user) {
+                    NSLog(@"Logged in!");
+                } failure:^(NSError *error) {
+                    NSLog(@"Failed to log in!");
+                }];
+            }
+        }
+        return YES;
+    }
+    return NO;
+}
+
+- (void)updateRootViewController
+{
+    
 }
 
 @end

@@ -21,6 +21,9 @@
 		5807713218E55D30004503E6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5807713018E55D30004503E6 /* InfoPlist.strings */; };
 		5807713418E55D30004503E6 /* tweetlyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5807713318E55D30004503E6 /* tweetlyTests.m */; };
 		5807714018E55E8E004503E6 /* TwitterClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5807713F18E55E8E004503E6 /* TwitterClient.m */; };
+		5807714718E62EF3004503E6 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5807714518E62EF3004503E6 /* SignInViewController.m */; };
+		5807714818E62EF3004503E6 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5807714618E62EF3004503E6 /* SignInViewController.xib */; };
+		588255C118E656E100AB7E1A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 588255C018E656E100AB7E1A /* User.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +55,11 @@
 		5807713318E55D30004503E6 /* tweetlyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tweetlyTests.m; sourceTree = "<group>"; };
 		5807713E18E55E8E004503E6 /* TwitterClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterClient.h; sourceTree = "<group>"; };
 		5807713F18E55E8E004503E6 /* TwitterClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterClient.m; sourceTree = "<group>"; };
+		5807714418E62EF3004503E6 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
+		5807714518E62EF3004503E6 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
+		5807714618E62EF3004503E6 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
+		588255BF18E656E100AB7E1A /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		588255C018E656E100AB7E1A /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		AE0A0C8AEA954EAFA1F6461D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		C1DBEBC2DD404C9FAE1AEED1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -116,6 +124,8 @@
 		5807711418E55D30004503E6 /* tweetly */ = {
 			isa = PBXGroup;
 			children = (
+				588255BE18E656D500AB7E1A /* Models */,
+				5807714318E62EB3004503E6 /* View Controllers */,
 				5807713D18E55E21004503E6 /* API */,
 				5807711D18E55D30004503E6 /* AppDelegate.h */,
 				5807711E18E55D30004503E6 /* AppDelegate.m */,
@@ -161,6 +171,25 @@
 				5807713F18E55E8E004503E6 /* TwitterClient.m */,
 			);
 			name = API;
+			sourceTree = "<group>";
+		};
+		5807714318E62EB3004503E6 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5807714418E62EF3004503E6 /* SignInViewController.h */,
+				5807714518E62EF3004503E6 /* SignInViewController.m */,
+				5807714618E62EF3004503E6 /* SignInViewController.xib */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		588255BE18E656D500AB7E1A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				588255BF18E656E100AB7E1A /* User.h */,
+				588255C018E656E100AB7E1A /* User.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5807711918E55D30004503E6 /* InfoPlist.strings in Resources */,
+				5807714818E62EF3004503E6 /* SignInViewController.xib in Resources */,
 				5807712118E55D30004503E6 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,6 +323,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				588255C118E656E100AB7E1A /* User.m in Sources */,
+				5807714718E62EF3004503E6 /* SignInViewController.m in Sources */,
 				5807711F18E55D30004503E6 /* AppDelegate.m in Sources */,
 				5807714018E55E8E004503E6 /* TwitterClient.m in Sources */,
 				5807711B18E55D30004503E6 /* main.m in Sources */,
