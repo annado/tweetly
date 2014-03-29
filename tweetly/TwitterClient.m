@@ -10,8 +10,8 @@
 #import "User.h"
 
 #define TWITTER_BASE_URL [NSURL URLWithString:@"https://api.twitter.com/"]
-#define TWITTER_CONSUMER_KEY @"otjebDrh7BVnTcIqIDIeg"
-#define TWITTER_CONSUMER_SECRET @"pZDP03HA6xEfrXm8BEuX47XVBeDumvzWk0A2bLQ7E8I"
+#define TWITTER_CONSUMER_KEY @"dXSzC094W9BgDIeQXpTw"
+#define TWITTER_CONSUMER_SECRET @"UvQAVBS9lY2n9SagBu3U48iUzFjQe7deGMtYXzhY7U"
 
 static NSString * const kAccessTokenKey = @"kAccessTokenKey";
 
