@@ -11,7 +11,20 @@
 NSString * const UserDidLoginNotification = @"UserDidLoginNotification";
 NSString * const UserDidLogoutNotification = @"UserDidLogoutNotification";
 
+@interface User ()
+@property (nonatomic, strong) NSDictionary *dictionary;
+@end
+
 @implementation User
+
+- initWithDictionary:(NSDictionary *)dictionary
+{
+    self = [super init];
+    if (self) {
+        self.dictionary = dictionary;
+    }
+    return self;
+}
 
 static User *currentUser;
 

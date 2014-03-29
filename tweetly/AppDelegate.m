@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "TwitterClient.h"
 #import "SignInViewController.h"
-#import "NSDictionary+BDBOAuth1Manager.h"
 #import "User.h"
 
 @implementation AppDelegate
@@ -59,15 +58,7 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     if ([url.scheme isEqualToString:@"tweetly"]) {
         if ([url.host isEqualToString:@"oauth"]) {
-            NSDictionary *parameters = [NSDictionary dictionaryFromQueryString:url.query];
-            
-            if (parameters[@"oauth_token"] && parameters[@"oauth_verifier"]) {
-                [[TwitterClient instance] currentUserWithQuery:url.query success:^(User *user) {
-                    NSLog(@"Logged in!");
-                } failure:^(NSError *error) {
-                    NSLog(@"Failed to log in!");
-                }];
-            }
+            [[TwitterClient instance] oAuthCallbackWithURL:url];
         }
         return YES;
     }

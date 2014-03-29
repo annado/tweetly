@@ -39,13 +39,7 @@
 
 - (IBAction)onSignInButton:(id)sender {
     NSLog(@"onSignInButton");
-    [[TwitterClient instance] authorizeWithCallback:[NSURL URLWithString:@"tweetly://oauth"]
-                                            success:^(BDBOAuthToken *accessToken, id responseObject) {
-                                                NSLog(@"success!");
-                                                NSLog(@"response: %@", responseObject);
-                                            } failure:^(NSError *error) {
-                                                NSLog(@"error: %@", error);
-                                            }];
+    [[TwitterClient instance] logIn];
 
 }
 @end

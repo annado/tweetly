@@ -7,6 +7,7 @@
 //
 
 #import "TwitterClient.h"
+#import "NSDictionary+BDBOAuth1Manager.h"
 #import "User.h"
 
 #define TWITTER_BASE_URL [NSURL URLWithString:@"https://api.twitter.com/"]
@@ -37,18 +38,24 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
     if (self != nil) {
         NSData *data = [[NSUserDefaults standardUserDefaults] dataForKey:kAccessTokenKey];
         if (data) {
-            NSLog(@"retrieving saved access token");
             self.accessToken = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         }
     }
     return self;
 }
 
-#pragma mark Authorization Flow
-- (void)authorizeWithCallback:(NSURL *)callbackUrl success:(void (^)(BDBOAuthToken *accessToken, id responseObject))success failure:(void (^)(NSError *error))failure
+- (void)logIn
 {
-    NSLog(@"Authorize with callback");
+    if (self.isAuthorized) {
+        NSLog(@"already authorized");
+        [self currentUser];
+    } else {
+        [self authorizeWithCallback:[NSURL URLWithString:@"tweetly://oauth"]];
+    }
+}
 
+- (void)authorizeWithCallback:(NSURL *)callbackUrl
+{
     self.accessToken = nil;
     [super fetchRequestTokenWithPath:@"/oauth/request_token"
                             method:@"POST"
@@ -56,45 +63,57 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
                              scope:nil
                            success:^(BDBOAuthToken *requestToken) {
                                NSLog(@"Got request token");
-                               NSString *authURL = [NSString stringWithFormat:@"oauth/authorize?oauth_token=%@", requestToken.token];
-                               [[UIApplication sharedApplication] openURL:[[NSURL URLWithString:authURL relativeToURL:TWITTER_BASE_URL] absoluteURL]];
+                               [self openOAuthWithToken:requestToken];
                            }
                            failure:^(NSError *error) {
-                               NSLog(@"[Failed to fetch request token] - %@", error.localizedDescription);
+                               [self showErrorWithMessage:@"ld not acquire OAuth access token. Please try again later."];
                            }];
 }
 
-- (void)currentUserWithQuery:(NSString *)query success:(void (^)(User *user))success failure:(void (^)(NSError *error))failure
+- (void)openOAuthWithToken:(BDBOAuthToken *)requestToken
 {
-    NSLog(@"query? %@", query);
+    NSString *authURL = [NSString stringWithFormat:@"oauth/authorize?oauth_token=%@", requestToken.token];
+    [[UIApplication sharedApplication] openURL:[[NSURL URLWithString:authURL relativeToURL:TWITTER_BASE_URL] absoluteURL]];
+}
+
+- (void)oAuthCallbackWithURL:(NSURL *)url
+{
+    NSDictionary *parameters = [NSDictionary dictionaryFromQueryString:url.query];
+    if (parameters[@"oauth_token"] && parameters[@"oauth_verifier"]) {
+        [self requestAccessToken:[BDBOAuthToken tokenWithQueryString:url.query]];
+    }
+}
+
+- (void)requestAccessToken:(BDBOAuthToken *)requestToken
+{
     [[TwitterClient instance] fetchAccessTokenWithPath:@"/oauth/access_token"
                                                 method:@"POST"
-                                          requestToken:[BDBOAuthToken tokenWithQueryString:query]
+                                          requestToken:requestToken
                                                success:^(BDBOAuthToken *accessToken) {
                                                    NSLog(@"accessToken: %@", accessToken.token);
                                                    [self setAccessToken:accessToken];
                                                    NSLog(@"Getting timeline...");
-                                                   [self userTimelineWithSuccess:^(id response) {
-                                                       NSLog(@"Got timeline: %@", response);
-                                                   } failure:^(NSError *error) {
-                                                       NSLog(@"failed to get timeline: %@", error);
-                                                   }];
+                                                   [self currentUser];
                                                }
                                                failure:^(NSError *error) {
-                                                   NSLog(@"Error: %@", error.localizedDescription);
-                                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                                       [[[UIAlertView alloc] initWithTitle:@"Error"
-                                                                                   message:@"Could not acquire OAuth access token. Please try again later."
-                                                                                  delegate:self
-                                                                         cancelButtonTitle:@"Dismiss"
-                                                                         otherButtonTitles:nil] show];
-                                                   });
+                                                   [self showErrorWithMessage:@"Could not acquire OAuth request token. Please try again later."];
                                                }];
+}
+
+- (void)currentUser
+{
+    [self GET:@"1.1/account/verify_credentials.json"
+        parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [User setCurrentUser:[[User alloc] initWithDictionary:responseObject]];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"[currentUser] failed - %@", error);
+            [self showErrorWithMessage:@"Could not verify credentials. Please try again later."];
+    }];
 }
 
 - (void)userTimelineWithSuccess:(void (^)(id response))success failure:(void (^)(NSError *error))failure
 {
-    NSString *timeline = @"statuses/home_timeline.json?count=100";
+    NSString *timeline = @"1.1/statuses/home_timeline.json?count=100";
     [self GET:timeline
    parameters:nil
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -104,6 +123,18 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
           failure(error); // TODO
       }];
+}
+
+#pragma mark private methods
+- (void)showErrorWithMessage:(NSString *)message
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[[UIAlertView alloc] initWithTitle:@"Error"
+                                    message:message
+                                   delegate:self
+                          cancelButtonTitle:@"Dismiss"
+                          otherButtonTitles:nil] show];
+    });
 }
 
 - (void)setAccessToken:(BDBOAuthToken *)accessToken {

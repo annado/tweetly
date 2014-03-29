@@ -12,6 +12,7 @@ extern NSString *const UserDidLoginNotification;
 extern NSString *const UserDidLogoutNotification;
 
 @interface User : NSObject
+- initWithDictionary:(NSDictionary *)dictionary;
 + (User *)currentUser;
 + (void)setCurrentUser:(User *)currentUser;
 @end

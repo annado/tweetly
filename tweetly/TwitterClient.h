@@ -13,8 +13,7 @@
 @interface TwitterClient : BDBOAuth1RequestOperationManager
 
 + (TwitterClient *)instance;
-
-- (void)authorizeWithCallback:(NSURL *)callbackUrl success:(void (^)(BDBOAuthToken *accessToken, id responseObject))success failure:(void (^)(NSError *error))failure;
-- (void)currentUserWithQuery:(NSString *)query success:(void (^)(User *user))success failure:(void (^)(NSError *error))failure;
+- (void)logIn;
+- (void)oAuthCallbackWithURL:(NSURL *)url;
 - (void)userTimelineWithSuccess:(void (^)(id response))success failure:(void (^)(NSError *error))failure;
 @end
