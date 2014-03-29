@@ -16,8 +16,21 @@
     if (self) {
         _date = dictionary[@"created_at"];
         _text = dictionary[@"text"];
-        _name = dictionary[@"user"][@"name"];
-        _username = dictionary[@"user"][@"screen_name"];
+
+        NSDictionary *retweet = dictionary[@"retweeted_status"];
+        NSDictionary *user;
+        if (retweet) {
+            user = retweet[@"user"];
+            _retweet = YES;
+            _retweetLabel = [NSString stringWithFormat:@"%@ retweeted", dictionary[@"user"][@"name"]];
+        } else {
+            NSLog(@"not a retweet: %@", _text);
+            user = dictionary[@"user"];
+            _retweet = NO;
+        }
+        _name = user[@"name"];
+        _username = user[@"screen_name"];
+        
         _retweetCount = [dictionary[@"retweet_count"] integerValue];
     }
     return self;

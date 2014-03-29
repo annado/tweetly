@@ -16,6 +16,9 @@
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong, readonly) NSString *usernameLabel;
 @property (nonatomic, assign) NSInteger retweetCount;
+@property (nonatomic, assign) BOOL retweet;
+@property (nonatomic, strong, readonly) NSString *retweetLabel;
+
 + (NSMutableArray *)tweetsWithArray:(NSArray *)array;
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 - (NSString *)getUsernameLabel;
