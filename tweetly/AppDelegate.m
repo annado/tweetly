@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "TwitterClient.h"
 #import "SignInViewController.h"
+#import "TimelineViewController.h"
 #import "User.h"
 
 @implementation AppDelegate
@@ -67,7 +68,11 @@
 
 - (void)updateRootViewController
 {
-    
+    if ([User currentUser] != nil) {
+        self.window.rootViewController = [[TimelineViewController alloc] init];
+    } else {
+        self.window.rootViewController = [[SignInViewController alloc] init];
+    }
 }
 
 @end

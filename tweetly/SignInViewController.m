@@ -38,7 +38,6 @@
 }
 
 - (IBAction)onSignInButton:(id)sender {
-    NSLog(@"onSignInButton");
     [[TwitterClient instance] logIn];
 
 }

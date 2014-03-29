@@ -26,20 +26,17 @@ NSString * const UserDidLogoutNotification = @"UserDidLogoutNotification";
     return self;
 }
 
-static User *currentUser;
+static User *_currentUser = nil;
 
 + (User *)currentUser
 {
-    if (!currentUser) {
-        
-        currentUser = [[User alloc] init];
-    }
-    return currentUser;
+    return _currentUser;
 }
 
-+ (void)setCurrentUser:(User *)user
++ (void)setCurrentUser:(User *)currentUser
 {
-    currentUser = user;
+    _currentUser = currentUser;
+    [[NSNotificationCenter defaultCenter] postNotificationName:UserDidLoginNotification object:nil];
 }
 
 @end

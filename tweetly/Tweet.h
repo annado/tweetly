@@ -10,11 +10,13 @@
 
 @interface Tweet : NSObject
 
-@property (nonatomic, strong, readonly) NSDate *date;
-@property (nonatomic, strong, readonly) NSString *text;
-@property (nonatomic, strong, readonly) NSString *name;
-@property (nonatomic, strong, readonly) NSString *username;
-@property (nonatomic, assign, readonly) NSInteger retweetCount;
+@property (nonatomic, strong) NSDate *date;
+@property (nonatomic, strong) NSString *text;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong, readonly) NSString *usernameLabel;
+@property (nonatomic, assign) NSInteger retweetCount;
 + (NSMutableArray *)tweetsWithArray:(NSArray *)array;
-
+- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (NSString *)getUsernameLabel;
 @end

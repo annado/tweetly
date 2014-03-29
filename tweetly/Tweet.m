@@ -10,28 +10,29 @@
 
 @implementation Tweet
 
-- (NSDate *)date {
-    return nil;
+- (id)initWithDictionary:(NSDictionary *)dictionary
+{
+    self = [super init];
+    if (self) {
+        _date = dictionary[@"created_at"];
+        _text = dictionary[@"text"];
+        _name = dictionary[@"user"][@"name"];
+        _username = dictionary[@"user"][@"screen_name"];
+        _retweetCount = [dictionary[@"retweet_count"] integerValue];
+    }
+    return self;
 }
 
-- (NSString *)text {
-    return @"";
-}
-
-- (NSString *)name {
-    return @"";
-}
-
-- (NSString *)username {
-    return @"";
-}
-
-- (NSInteger)retweetCount {
-    return 0;
+- (NSString *)getUsernameLabel
+{
+    return [NSString stringWithFormat:@"@%@", _username];
 }
 
 + (NSMutableArray *)tweetsWithArray:(NSArray *)array {
     NSMutableArray *tweets = [[NSMutableArray alloc] initWithCapacity:array.count];
+    for (NSDictionary *dict in array) {
+        [tweets addObject:[[Tweet alloc] initWithDictionary:dict]];
+    }
     return tweets;
 }
 

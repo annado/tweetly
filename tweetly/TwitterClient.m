@@ -111,7 +111,7 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
     }];
 }
 
-- (void)userTimelineWithSuccess:(void (^)(id response))success failure:(void (^)(NSError *error))failure
+- (void)timelineWithSuccess:(void (^)(NSMutableArray *tweets))success failure:(void (^)(NSError *error))failure
 {
     NSString *timeline = @"1.1/statuses/home_timeline.json?count=100";
     [self GET:timeline

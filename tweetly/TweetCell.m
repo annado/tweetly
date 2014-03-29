@@ -9,6 +9,16 @@
 #import "TweetCell.h"
 #import "Tweet.h"
 
+@interface TweetCell ()
+@property (weak, nonatomic) IBOutlet UILabel *retweetLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
+@property (weak, nonatomic) IBOutlet UILabel *tweetLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+
+@end
+
 @implementation TweetCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -30,36 +40,13 @@
 - (void)setTweet:(Tweet *)tweet
 {
     _tweet = tweet;
-    if (tweet.retweetCount == 0) {
-        [self.retweetLabel setHidden:YES];
-    }
+//    if (tweet.retweetCount == 0) {
+//        [self.retweetLabel setHidden:YES];
+//    }
     self.nameLabel.text = _tweet.name;
-    self.usernameLabel.text = [NSString stringWithFormat:@"@%@", _tweet.username];
-    self.timestampLabel.text = [self relativeDateStringForDate:_tweet.date];
-}
-
-- (NSString *)relativeDateStringForDate:(NSDate *)date
-{
-    NSCalendarUnit units = NSDayCalendarUnit | NSWeekOfYearCalendarUnit |
-    NSMonthCalendarUnit | NSYearCalendarUnit;
-    
-    // if `date` is before "now" (i.e. in the past) then the components will be positive
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:units
-                                                                   fromDate:date
-                                                                     toDate:[NSDate date]
-                                                                    options:0];
-    
-    if (components.year > 0) {
-        return [NSString stringWithFormat:@"%ld y", (long)components.year];
-    } else if (components.month > 0) {
-        return [NSString stringWithFormat:@"%ld mo", (long)components.month];
-    } else if (components.weekOfYear > 0) {
-        return [NSString stringWithFormat:@"%ld w", (long)components.weekOfYear];
-    } else if (components.day > 0) {
-        return [NSString stringWithFormat:@"%ld d", (long)components.day];
-    } else {
-        return [NSString stringWithFormat:@"%ld h", (long)components.hour];
-    }
+    self.usernameLabel.text = _tweet.usernameLabel;
+    self.tweetLabel.text = _tweet.text;
+//    self.timestampLabel.text = [self relativeDateStringForDate:_tweet.date];
 }
 
 static NSInteger NameLabelMaxWidth = 218;
@@ -74,9 +61,9 @@ static NSInteger CellVerticalPadding = 0;
     NSInteger tweetHeight = [tweet.text boundingRectWithSize:CGSizeMake(NameLabelMaxWidth, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size.height;
     
     NSInteger height = tweetHeight + ActionViewHeight + NameLabelHeight + CellVerticalPadding;
-    if (tweet.retweetCount > 0) {
-        height += RetweetLabelHeight;
-    }
+    height += RetweetLabelHeight;
+//    if (tweet.retweetCount > 0) {
+//    }
     return height;
 }
 
