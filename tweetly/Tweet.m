@@ -24,7 +24,7 @@
             _retweet = YES;
             _retweetLabel = [NSString stringWithFormat:@"%@ retweeted", dictionary[@"user"][@"name"]];
         } else {
-            NSLog(@"not a retweet: %@", _text);
+//            NSLog(@"not a retweet: %@", _text);
             user = dictionary[@"user"];
             _retweet = NO;
         }
