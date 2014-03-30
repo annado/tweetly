@@ -58,9 +58,9 @@ static NSInteger CellVerticalPadding = 0;
 
 + (NSInteger)displayHeightForTweet:(Tweet *)tweet
 {
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"HelveticaNeue-Light" size:13],NSFontAttributeName, nil];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"HelveticaNeue-Light" size:14],NSFontAttributeName, nil];
     NSInteger tweetHeight = [tweet.text boundingRectWithSize:CGSizeMake(TweetLabelMaxWidth, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size.height;
-    
+
     NSLog(@"Tweet height: %ld for tweet: %@", (long)tweetHeight, tweet.text);
     NSInteger height = tweetHeight + ActionViewHeight + NameLabelHeight + CellVerticalPadding;
     height += RetweetLabelHeight;
