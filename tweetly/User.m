@@ -17,6 +17,8 @@ NSString * const UserDidLogoutNotification = @"UserDidLogoutNotification";
 
 @implementation User
 
+static NSString * const kCurrentUserKey = @"kCurrentUserKey";
+
 - initWithDictionary:(NSDictionary *)dictionary
 {
     self = [super init];
@@ -34,15 +36,28 @@ static User *_currentUser = nil;
 
 + (User *)currentUser
 {
+    if (!_currentUser) {
+        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:kCurrentUserKey];
+        if (data) {
+            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            _currentUser = [[User alloc] initWithDictionary:dictionary];
+        }
+    }
     return _currentUser;
 }
 
 + (void)setCurrentUser:(User *)currentUser
 {
+    if (!currentUser) {
+        
+    }
     _currentUser = currentUser;
     if (currentUser != nil) {
+        NSData *data = [NSJSONSerialization dataWithJSONObject:_currentUser.dictionary options:NSJSONWritingPrettyPrinted error:nil];
+        [[NSUserDefaults standardUserDefaults] setObject:data forKey:kCurrentUserKey];
         [[NSNotificationCenter defaultCenter] postNotificationName:UserDidLoginNotification object:nil];
     } else {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCurrentUserKey];
         [[NSNotificationCenter defaultCenter] postNotificationName:UserDidLogoutNotification object:nil];
     }
 }

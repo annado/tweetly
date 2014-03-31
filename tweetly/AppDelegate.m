@@ -20,8 +20,7 @@
     // Override point for customization after application launch.
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:(85/255.0f) green:(172/255.0f) blue:(238/255.0f) alpha:1]];
 
-    SignInViewController *signInVC = [[SignInViewController alloc] init];
-    self.window.rootViewController = signInVC;
+    [self updateRootViewController];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRootViewController) name:UserDidLoginNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRootViewController) name:UserDidLogoutNotification object:nil];
