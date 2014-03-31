@@ -55,13 +55,15 @@
 
 - (void)onTweet:(UIBarButtonItem *)button
 {
-    NSLog(@"posting status: %@", self.composerTextView.text);
-    [[TwitterClient instance] postTweet:self.composerTextView.text success:^(Tweet *tweet) {
-        NSLog(@"Success!:");
-        [self onTweetSuccess:tweet];
-    } failure:^(NSError *error) {
-        
-    }];
+    NSString *text = self.composerTextView.text;
+    if (text.length > 0) {
+        [[TwitterClient instance] postTweet:text success:^(Tweet *tweet) {
+            NSLog(@"Success!:");
+            [self onTweetSuccess:tweet];
+        } failure:^(NSError *error) {
+            
+        }];
+    }
 }
 
 - (void)setupUserProfile

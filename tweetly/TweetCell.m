@@ -49,7 +49,7 @@
     }
     
     self.nameLabel.text = _tweet.name;
-    self.usernameLabel.text = _tweet.usernameLabel;
+    self.usernameLabel.text = [_tweet getUsernameLabel];
     self.tweetLabel.text = _tweet.text;
     [self.avatarImageView setImageWithURL:_tweet.avatarURL];
 //    self.timestampLabel.text = [self relativeDateStringForDate:_tweet.date];

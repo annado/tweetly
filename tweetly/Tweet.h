@@ -15,8 +15,8 @@
 @property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong, readonly) NSString *usernameLabel;
 @property (nonatomic, assign) NSInteger retweetCount;
+@property (nonatomic, assign) NSInteger favoriteCount;
 @property (nonatomic, assign) BOOL retweet;
 @property (nonatomic, strong, readonly) NSString *retweetLabel;
 @property (nonatomic, strong, readonly) NSURL *avatarURL;

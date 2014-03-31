@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Anna Do. All rights reserved.
 //
 
+#import <AFNetworking/UIImageView+AFNetworking.h>
 #import "TweetViewController.h"
 #import "Tweet.h"
 
@@ -17,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numRetweetsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numFavoritesLabel;
-
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @end
 
@@ -35,13 +35,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    if (_tweet) {
+        if (_tweet.retweet) {
+            self.retweetLabel.text = _tweet.retweetLabel;
+        } else {
+            NSLayoutConstraint *constraint = self.retweetLabel.constraints[0];
+            constraint.constant = 0.f;
+        }
+        
+        self.nameLabel.text = _tweet.name;
+        self.usernameLabel.text = [_tweet getUsernameLabel];
+        self.tweetLabel.text = _tweet.text;
+        [self.avatarImageView setImageWithURL:_tweet.avatarURL];
+        self.numRetweetsLabel.text = [@(_tweet.retweetCount) stringValue];
+        self.numFavoritesLabel.text = [@(_tweet.favoriteCount) stringValue];
+        self.timestampLabel.text = _tweet.displayDate;
+    }
 }
 
 - (void)setTweet:(Tweet *)tweet
 {
     _tweet = tweet;
-    self.tweetLabel.text = _tweet.text;
 }
 
 @end

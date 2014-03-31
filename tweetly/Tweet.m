@@ -46,6 +46,7 @@
         _avatarURL = [NSURL URLWithString:user[@"profile_image_url"]];
         
         _retweetCount = [dictionary[@"retweet_count"] integerValue];
+        _retweetCount = [dictionary[@"favorite_count"] integerValue];
     }
     return self;
 }

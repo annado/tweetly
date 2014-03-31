@@ -88,6 +88,7 @@ static NSString *CellIdentifier = @"TweetCell";
 - (void)onViewTweet:(Tweet *)tweet
 {
     TweetViewController *tweetViewController = [[TweetViewController alloc] init];
+    tweetViewController.tweet = tweet;
     [self.navigationController pushViewController:tweetViewController animated:YES];
 }
 
