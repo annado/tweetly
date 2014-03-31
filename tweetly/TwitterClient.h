@@ -16,6 +16,7 @@
 
 + (TwitterClient *)instance;
 - (void)logIn;
+- (void)logout;
 - (void)oAuthCallbackWithURL:(NSURL *)url;
 - (void)timelineWithSuccess:(void (^)(NSMutableArray *tweets))success failure:(void (^)(NSError *error))failure;
 - (void)postTweet:(NSString *)tweet success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure;

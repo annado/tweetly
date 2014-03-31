@@ -40,7 +40,11 @@ static User *_currentUser = nil;
 + (void)setCurrentUser:(User *)currentUser
 {
     _currentUser = currentUser;
-    [[NSNotificationCenter defaultCenter] postNotificationName:UserDidLoginNotification object:nil];
+    if (currentUser != nil) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:UserDidLoginNotification object:nil];
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:UserDidLogoutNotification object:nil];
+    }
 }
 
 @end

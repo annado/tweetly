@@ -45,7 +45,12 @@
 
 - (void)onCancel:(UIBarButtonItem *)button
 {
-    
+    [self.delegate composeViewController:self postedTweet:nil];
+}
+
+- (void)onTweetSuccess:(Tweet *)tweet
+{
+    [self.delegate composeViewController:self postedTweet:tweet];
 }
 
 - (void)onTweet:(UIBarButtonItem *)button
@@ -53,6 +58,7 @@
     NSLog(@"posting status: %@", self.composerTextView.text);
     [[TwitterClient instance] postTweet:self.composerTextView.text success:^(Tweet *tweet) {
         NSLog(@"Success!:");
+        [self onTweetSuccess:tweet];
     } failure:^(NSError *error) {
         
     }];

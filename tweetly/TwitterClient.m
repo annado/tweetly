@@ -55,6 +55,12 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
     }
 }
 
+- (void)logout
+{
+    [self deauthorize];
+    [User setCurrentUser:nil];
+}
+
 - (void)authorizeWithCallback:(NSURL *)callbackUrl
 {
     self.accessToken = nil;
@@ -129,7 +135,7 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
 - (void)postTweet:(NSString *)tweet success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure
 {
     NSString *post = @"1.1/statuses/update.json";
-    [self GET:post
+    [self POST:post
    parameters:@{@"status":tweet}
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
           Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];

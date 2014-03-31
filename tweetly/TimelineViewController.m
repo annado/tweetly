@@ -72,6 +72,7 @@ static NSString *CellIdentifier = @"TweetCell";
 - (void)onLogOutButton:(UIBarButtonItem *)button
 {
     NSLog(@"Log out");
+    [[TwitterClient instance] logout];
 }
 
 - (void)onComposeButton:(UIBarButtonItem *)button
