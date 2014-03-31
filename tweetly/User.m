@@ -24,7 +24,7 @@ NSString * const UserDidLogoutNotification = @"UserDidLogoutNotification";
         self.dictionary = dictionary;
         
         _name = dictionary[@"name"];
-        _username = dictionary[@"screen_name"];
+        _username = [NSString stringWithFormat:@"@%@", dictionary[@"screen_name"]];
         _avatarURL = [NSURL URLWithString:dictionary[@"profile_image_url"]];
     }
     return self;

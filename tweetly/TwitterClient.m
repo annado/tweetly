@@ -9,6 +9,7 @@
 #import "TwitterClient.h"
 #import "NSDictionary+BDBOAuth1Manager.h"
 #import "User.h"
+#import "Tweet.h"
 
 #define TWITTER_BASE_URL [NSURL URLWithString:@"https://api.twitter.com/"]
 #define TWITTER_CONSUMER_KEY @"dXSzC094W9BgDIeQXpTw"
@@ -113,7 +114,7 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
 
 - (void)timelineWithSuccess:(void (^)(NSMutableArray *tweets))success failure:(void (^)(NSError *error))failure
 {
-    NSString *timeline = @"1.1/statuses/home_timeline.json?count=100";
+    NSString *timeline = @"1.1/statuses/home_timeline.json?count=20";
     [self GET:timeline
    parameters:nil
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -122,6 +123,22 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
       }
       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
           failure(error); // TODO
+      }];
+}
+
+- (void)postTweet:(NSString *)tweet success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure
+{
+    NSString *post = @"1.1/statuses/update.json";
+    [self GET:post
+   parameters:@{@"status":tweet}
+      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+          Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
+          success(tweet); // TODO
+      }
+      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure(error); // TODO
+          NSLog(@"failed to postTweet: %@", error);
+          [self showErrorWithMessage:@"Failed to post Tweet. Please try again later."];
       }];
 }
 

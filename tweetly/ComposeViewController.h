@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ComposeViewController : UIViewController
+@class Tweet;
 
+@interface ComposeViewController : UIViewController <UITextViewDelegate>
+@property (nonatomic, weak) id delegate;
+@end
+
+@protocol ComposeViewDelegate <NSObject>
+- (void)composeViewController:(ComposeViewController *)composeViewController
+                postedTweet:(Tweet *)tweet;
 @end

@@ -78,10 +78,26 @@ static NSString *CellIdentifier = @"TweetCell";
 {
     NSLog(@"Compose");
     ComposeViewController *composeViewController = [[ComposeViewController alloc] init];
+    composeViewController.delegate = self;
     UINavigationController *navigationController = [[UINavigationController alloc]
                                                     initWithRootViewController:composeViewController];
     [self presentViewController:navigationController animated:YES completion: nil];
 }
+
+#pragma mark ComposeView delegate methods
+- (void)composeViewController:(ComposeViewController *)composeViewController
+                  postedTweet:(Tweet *)tweet
+{
+    if (tweet != nil) {
+        [self.tweets insertObject:tweet atIndex:0];
+        [self.tableView reloadData];
+    } else {
+        
+    }
+    [self dismissViewControllerAnimated:YES completion: nil];
+}
+
+#pragma mark TableView delegate methods
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

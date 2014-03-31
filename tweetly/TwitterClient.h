@@ -10,10 +10,13 @@
 #import <BDBOAuth1Manager/BDBOAuth1RequestOperationManager.h>
 
 @class User;
+@class Tweet;
+
 @interface TwitterClient : BDBOAuth1RequestOperationManager
 
 + (TwitterClient *)instance;
 - (void)logIn;
 - (void)oAuthCallbackWithURL:(NSURL *)url;
 - (void)timelineWithSuccess:(void (^)(NSMutableArray *tweets))success failure:(void (^)(NSError *error))failure;
+- (void)postTweet:(NSString *)tweet success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure;
 @end
