@@ -8,6 +8,7 @@
 
 #import "TimelineViewController.h"
 #import "ComposeViewController.h"
+#import "TweetViewController.h"
 #import "TwitterClient.h"
 #import "Tweet.h"
 #import "TweetCell.h"
@@ -26,7 +27,7 @@ static NSString *CellIdentifier = @"TweetCell";
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = @"Tweetly";
+        self.title = @"Timeline";
         self.tweets = [[NSMutableArray alloc] init];
         [[TwitterClient instance] timelineWithSuccess:^(NSMutableArray *tweets) {
             self.tweets = [Tweet tweetsWithArray:tweets];
@@ -77,12 +78,17 @@ static NSString *CellIdentifier = @"TweetCell";
 
 - (void)onComposeButton:(UIBarButtonItem *)button
 {
-    NSLog(@"Compose");
     ComposeViewController *composeViewController = [[ComposeViewController alloc] init];
     composeViewController.delegate = self;
     UINavigationController *navigationController = [[UINavigationController alloc]
                                                     initWithRootViewController:composeViewController];
     [self presentViewController:navigationController animated:YES completion: nil];
+}
+
+- (void)onViewTweet:(Tweet *)tweet
+{
+    TweetViewController *tweetViewController = [[TweetViewController alloc] init];
+    [self.navigationController pushViewController:tweetViewController animated:YES];
 }
 
 #pragma mark ComposeView delegate methods
@@ -118,4 +124,9 @@ static NSString *CellIdentifier = @"TweetCell";
     return [TweetCell displayHeightForTweet:tweet];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Tweet *tweet = self.tweets[indexPath.row];
+    [self onViewTweet:tweet];
+}
 @end

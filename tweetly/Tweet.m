@@ -10,11 +10,25 @@
 
 @implementation Tweet
 
++ (NSDateFormatter *)dateFormatter {
+    static NSDateFormatter *dateFormatter;
+    static dispatch_once_t once;
+    
+    dispatch_once(&once, ^{
+        dateFormatter = [[NSDateFormatter alloc] init];
+    });
+    
+    return dateFormatter;
+}
+
 - (id)initWithDictionary:(NSDictionary *)dictionary
 {
     self = [super init];
     if (self) {
         _date = dictionary[@"created_at"];
+        _displayDate = [NSDateFormatter localizedStringFromDate:_date
+                          dateStyle:NSDateFormatterShortStyle
+                          timeStyle:NSDateFormatterShortStyle];
         _text = dictionary[@"text"];
 
         NSDictionary *retweet = dictionary[@"retweeted_status"];
@@ -24,7 +38,6 @@
             _retweet = YES;
             _retweetLabel = [NSString stringWithFormat:@"%@ retweeted", dictionary[@"user"][@"name"]];
         } else {
-//            NSLog(@"not a retweet: %@", _text);
             user = dictionary[@"user"];
             _retweet = NO;
         }

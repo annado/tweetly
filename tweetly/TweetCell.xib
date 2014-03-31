@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EJc-CZ-lrM">
-                        <rect key="frame" x="10" y="20" width="45" height="45"/>
+                        <rect key="frame" x="10" y="23" width="45" height="45"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="45" id="PUp-zY-qF8"/>
@@ -23,7 +23,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="First Last Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ns-Xk-JRv">
-                        <rect key="frame" x="60" y="20" width="98" height="16"/>
+                        <rect key="frame" x="60" y="23" width="98" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="guP-xp-eDc"/>
@@ -33,7 +33,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIa-DK-ZaN">
-                        <rect key="frame" x="163" y="20" width="63" height="16"/>
+                        <rect key="frame" x="163" y="23" width="63" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="QaU-BW-Yzi"/>
@@ -43,14 +43,14 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQj-oL-yhJ">
-                        <rect key="frame" x="252" y="21" width="26" height="15"/>
+                        <rect key="frame" x="252" y="24" width="26" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                         <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="253" text="Tweet in 240 characters. Tweet in 240 characters Tweet in 240 characters. Tweet in 240 characters" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="218" translatesAutoresizingMaskIntoConstraints="NO" id="V0v-BH-ZS0">
-                        <rect key="frame" x="60" y="36" width="218" height="92"/>
+                        <rect key="frame" x="60" y="39" width="218" height="89"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
                         <nil key="highlightedColor"/>
@@ -81,12 +81,12 @@
                     <constraint firstItem="9ns-Xk-JRv" firstAttribute="leading" secondItem="EJc-CZ-lrM" secondAttribute="trailing" constant="5" id="4Lk-JU-Oi7"/>
                     <constraint firstItem="fhD-Ul-yv5" firstAttribute="top" secondItem="V0v-BH-ZS0" secondAttribute="bottom" id="Hfa-57-XOT"/>
                     <constraint firstItem="V0v-BH-ZS0" firstAttribute="leading" secondItem="9ns-Xk-JRv" secondAttribute="leading" id="QNV-XM-GMc"/>
-                    <constraint firstItem="9ns-Xk-JRv" firstAttribute="top" secondItem="zOf-cP-wfO" secondAttribute="bottom" constant="2" id="QaB-Xn-CLK"/>
+                    <constraint firstItem="9ns-Xk-JRv" firstAttribute="top" secondItem="zOf-cP-wfO" secondAttribute="bottom" constant="5" id="QaB-Xn-CLK"/>
                     <constraint firstAttribute="bottom" secondItem="fhD-Ul-yv5" secondAttribute="bottom" id="RM3-wl-iNS"/>
                     <constraint firstItem="V0v-BH-ZS0" firstAttribute="top" secondItem="9ns-Xk-JRv" secondAttribute="bottom" id="aIx-VT-3H6"/>
                     <constraint firstAttribute="trailing" secondItem="yQj-oL-yhJ" secondAttribute="trailing" constant="10" id="arx-bi-yAH"/>
                     <constraint firstItem="zOf-cP-wfO" firstAttribute="top" secondItem="XtO-4d-OgJ" secondAttribute="top" constant="2" id="gog-Ju-dCG"/>
-                    <constraint firstItem="EJc-CZ-lrM" firstAttribute="leading" secondItem="XtO-4d-OgJ" secondAttribute="leading" constant="10" id="lux-CX-eu5"/>
+                    <constraint firstItem="EJc-CZ-lrM" firstAttribute="leading" secondItem="XtO-4d-OgJ" secondAttribute="leading" priority="999" constant="10" id="lux-CX-eu5"/>
                     <constraint firstItem="EJc-CZ-lrM" firstAttribute="top" secondItem="9ns-Xk-JRv" secondAttribute="top" id="xI0-Z0-YGz"/>
                     <constraint firstItem="fhD-Ul-yv5" firstAttribute="leading" secondItem="9ns-Xk-JRv" secondAttribute="leading" id="xb7-lj-Bsg"/>
                     <constraint firstItem="iIa-DK-ZaN" firstAttribute="baseline" secondItem="yQj-oL-yhJ" secondAttribute="baseline" id="xn3-a6-R1e"/>

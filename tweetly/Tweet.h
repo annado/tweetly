@@ -11,6 +11,7 @@
 @interface Tweet : NSObject
 
 @property (nonatomic, strong) NSDate *date;
+@property (nonatomic, strong) NSString *displayDate;
 @property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *username;
@@ -20,6 +21,7 @@
 @property (nonatomic, strong, readonly) NSString *retweetLabel;
 @property (nonatomic, strong, readonly) NSURL *avatarURL;
 
++ (NSDateFormatter *)dateFormatter;
 + (NSMutableArray *)tweetsWithArray:(NSArray *)array;
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 - (NSString *)getUsernameLabel;
