@@ -17,6 +17,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tweetLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (weak, nonatomic) IBOutlet UIButton *replyButton;
+@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 
 @end
 
@@ -56,7 +59,7 @@
 }
 
 static NSInteger TweetLabelMaxWidth = 218;
-static NSInteger ActionViewHeight = 22;
+static NSInteger ActionViewHeight = 16 + 20;
 static NSInteger NameLabelHeight = 16 + 4;
 static NSInteger RetweetLabelHeight = 16;
 static NSInteger CellVerticalPadding = 0;
