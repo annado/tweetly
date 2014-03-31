@@ -7,6 +7,7 @@
 //
 
 #import "TimelineViewController.h"
+#import "ComposeViewController.h"
 #import "TwitterClient.h"
 #import "Tweet.h"
 #import "TweetCell.h"
@@ -25,6 +26,7 @@ static NSString *CellIdentifier = @"TweetCell";
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.title = @"Tweetly";
         self.tweets = [[NSMutableArray alloc] init];
         [[TwitterClient instance] timelineWithSuccess:^(NSMutableArray *tweets) {
             self.tweets = [Tweet tweetsWithArray:tweets];
@@ -32,6 +34,13 @@ static NSString *CellIdentifier = @"TweetCell";
         } failure:^(NSError *error) {
             NSLog(@"Failed to get tweets");
         }];
+        
+        // Configure the nav buttons
+        UIBarButtonItem *logOutButton = [[UIBarButtonItem alloc] initWithTitle:@"Log Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogOutButton:)];
+        self.navigationItem.leftBarButtonItem = logOutButton;
+        
+        UIBarButtonItem *composeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onComposeButton:)];
+        self.navigationItem.rightBarButtonItem = composeButton;
     }
     return self;
 }
@@ -58,6 +67,20 @@ static NSString *CellIdentifier = @"TweetCell";
 {
     NSLog(@"Reloading...");
     [self.refreshControl endRefreshing];
+}
+
+- (void)onLogOutButton:(UIBarButtonItem *)button
+{
+    NSLog(@"Log out");
+}
+
+- (void)onComposeButton:(UIBarButtonItem *)button
+{
+    NSLog(@"Compose");
+    ComposeViewController *composeViewController = [[ComposeViewController alloc] init];
+    UINavigationController *navigationController = [[UINavigationController alloc]
+                                                    initWithRootViewController:composeViewController];
+    [self presentViewController:navigationController animated:YES completion: nil];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

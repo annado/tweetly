@@ -18,6 +18,7 @@
 @property (nonatomic, assign) NSInteger retweetCount;
 @property (nonatomic, assign) BOOL retweet;
 @property (nonatomic, strong, readonly) NSString *retweetLabel;
+@property (nonatomic, strong, readonly) NSURL *avatarURL;
 
 + (NSMutableArray *)tweetsWithArray:(NSArray *)array;
 - (id)initWithDictionary:(NSDictionary *)dictionary;

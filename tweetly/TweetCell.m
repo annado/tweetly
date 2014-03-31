@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Anna Do. All rights reserved.
 //
 
+#import <AFNetworking/UIImageView+AFNetworking.h>
 #import "TweetCell.h"
 #import "Tweet.h"
 
@@ -42,11 +43,15 @@
     _tweet = tweet;
     if (tweet.retweet) {
         self.retweetLabel.text = tweet.retweetLabel;
+    } else {
+        NSLayoutConstraint *constraint = self.retweetLabel.constraints[0];
+        constraint.constant = 0.f;
     }
-    self.retweetLabel.hidden = !tweet.retweet;
+    
     self.nameLabel.text = _tweet.name;
     self.usernameLabel.text = _tweet.usernameLabel;
     self.tweetLabel.text = _tweet.text;
+    [self.avatarImageView setImageWithURL:_tweet.avatarURL];
 //    self.timestampLabel.text = [self relativeDateStringForDate:_tweet.date];
 }
 

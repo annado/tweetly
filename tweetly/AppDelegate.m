@@ -18,6 +18,8 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:(85/255.0f) green:(172/255.0f) blue:(238/255.0f) alpha:1]];
+
     SignInViewController *signInVC = [[SignInViewController alloc] init];
     self.window.rootViewController = signInVC;
     
@@ -69,7 +71,10 @@
 - (void)updateRootViewController
 {
     if ([User currentUser] != nil) {
-        self.window.rootViewController = [[TimelineViewController alloc] init];
+        TimelineViewController *timelineViewController = [[TimelineViewController alloc] init];
+        UINavigationController *navigationController = [[UINavigationController alloc]
+                                                        initWithRootViewController:timelineViewController];
+        self.window.rootViewController = navigationController;
     } else {
         self.window.rootViewController = [[SignInViewController alloc] init];
     }

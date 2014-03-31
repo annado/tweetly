@@ -30,6 +30,7 @@
         }
         _name = user[@"name"];
         _username = user[@"screen_name"];
+        _avatarURL = [NSURL URLWithString:user[@"profile_image_url"]];
         
         _retweetCount = [dictionary[@"retweet_count"] integerValue];
     }
