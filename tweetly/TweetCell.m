@@ -10,6 +10,7 @@
 #import "TwitterClient.h"
 #import "TweetCell.h"
 #import "Tweet.h"
+#import "TimelineViewController.h"
 
 @interface TweetCell ()
 @property (weak, nonatomic) IBOutlet UILabel *retweetLabel;
@@ -79,6 +80,7 @@ static NSInteger CellVerticalPadding = 0;
 
 - (IBAction)onReplyButton:(id)sender {
     NSLog(@"Reply");
+    [[NSNotificationCenter defaultCenter] postNotificationName:ShowComposerNotification object:@{@"replyID": _tweet.id}];
 }
 
 - (IBAction)onRetweetButton:(id)sender {

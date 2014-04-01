@@ -43,6 +43,17 @@
     self.composerTextView.delegate = self;
 }
 
+- (void)setReplyID:(NSString *)replyID
+{
+    if (replyID) {
+        _replyID = replyID;
+        
+        // TODO: consolidate with init code
+        UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(onTweet:)];
+        self.navigationItem.rightBarButtonItem = submitButton;
+    }
+}
+
 - (void)onCancel:(UIBarButtonItem *)button
 {
     [self.delegate composeViewController:self postedTweet:nil];

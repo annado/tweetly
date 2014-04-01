@@ -12,6 +12,7 @@
 
 @interface ComposeViewController : UIViewController <UITextViewDelegate>
 @property (nonatomic, weak) id delegate;
+@property (nonatomic, strong) NSString *replyID;
 @end
 
 @protocol ComposeViewDelegate <NSObject>

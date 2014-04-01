@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ComposeViewController.h"
 
+extern NSString *const ShowComposerNotification;
+
 @interface TimelineViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ComposeViewDelegate>
 
 @end

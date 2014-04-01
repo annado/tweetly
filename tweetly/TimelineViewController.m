@@ -19,6 +19,8 @@
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @end
 
+NSString * const ShowComposerNotification = @"ShowComposerNotification";
+
 @implementation TimelineViewController
 
 static NSString *CellIdentifier = @"TweetCell";
@@ -37,6 +39,8 @@ static NSString *CellIdentifier = @"TweetCell";
         
         UIBarButtonItem *composeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onComposeButton:)];
         self.navigationItem.rightBarButtonItem = composeButton;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onComposeNotification:) name:ShowComposerNotification object:nil];
+
     }
     return self;
 }
@@ -79,17 +83,28 @@ static NSString *CellIdentifier = @"TweetCell";
 
 - (void)onLogOutButton:(UIBarButtonItem *)button
 {
-    NSLog(@"Log out");
     [[TwitterClient instance] logout];
 }
 
 - (void)onComposeButton:(UIBarButtonItem *)button
 {
+    [self showComposer:nil];
+}
+
+- (void)showComposer:(NSString *)replyID
+{
     ComposeViewController *composeViewController = [[ComposeViewController alloc] init];
     composeViewController.delegate = self;
+    composeViewController.replyID = replyID;
     UINavigationController *navigationController = [[UINavigationController alloc]
                                                     initWithRootViewController:composeViewController];
     [self presentViewController:navigationController animated:YES completion: nil];
+}
+
+- (void)onComposeNotification:(NSNotification *)notification
+{
+    NSString *replyID = notification.object[@"replyID"];
+    [self showComposer:replyID];
 }
 
 - (void)onViewTweet:(Tweet *)tweet
