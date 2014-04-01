@@ -28,4 +28,5 @@
 + (NSMutableArray *)tweetsWithArray:(NSArray *)array;
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 - (NSString *)getUsernameLabel;
+- (NSString *)timeAgo;
 @end

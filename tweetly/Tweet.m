@@ -25,11 +25,13 @@
 {
     self = [super init];
     if (self) {
-        _date = dictionary[@"created_at"];
+        NSString *dateString = dictionary[@"created_at"];
+        NSDateFormatter *dateFormatter = [Tweet dateFormatter];
+        [dateFormatter setDateFormat:@"eee MMM dd HH:mm:ss ZZZZ yyyy"];
+        _date = [dateFormatter dateFromString:dateString];
         _displayDate = [NSDateFormatter localizedStringFromDate:_date
                           dateStyle:NSDateFormatterShortStyle
                           timeStyle:NSDateFormatterShortStyle];
-//        NSLog(@"display date? %@", _displayDate);
 
         _id = dictionary[@"id"];
         _text = dictionary[@"text"];
@@ -59,6 +61,30 @@
 - (NSString *)getUsernameLabel
 {
     return [NSString stringWithFormat:@"@%@", _username];
+}
+
+- (NSString *)timeAgo
+{
+    NSDate *date = _date;
+    NSDate *todayDate = [NSDate date];
+    double ti = [date timeIntervalSinceDate:todayDate];
+    ti = ti * -1;
+    if(ti < 1) {
+    	return @"0s";
+    } else 	if (ti < 60) {
+    	return @"1m";
+    } else if (ti < 3600) {
+    	int diff = round(ti / 60);
+    	return [NSString stringWithFormat:@"%dm", diff];
+    } else if (ti < 86400) {
+    	int diff = round(ti / 60 / 60);
+    	return[NSString stringWithFormat:@"%dh", diff];
+    } else if (ti < 2629743) {
+    	int diff = round(ti / 60 / 60 / 24);
+    	return[NSString stringWithFormat:@"%dd", diff];
+    } else {
+    	return @"0s";
+    }
 }
 
 + (NSMutableArray *)tweetsWithArray:(NSArray *)array {

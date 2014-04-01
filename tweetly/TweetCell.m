@@ -52,7 +52,7 @@
     self.usernameLabel.text = [_tweet getUsernameLabel];
     self.tweetLabel.text = _tweet.text;
     [self.avatarImageView setImageWithURL:_tweet.avatarURL];
-//    self.timestampLabel.text = [self relativeDateStringForDate:_tweet.date];
+    self.timestampLabel.text = [_tweet timeAgo];
     self.favoriteButton.imageView.image = [self.favoriteButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     self.favoriteButton.tintColor = _tweet.favorited ? self.selectedFavoriteColor : self.defaultButtonColor;
     self.retweetButton.tintColor = _tweet.retweeted ? self.selectedRetweetColor : self.defaultButtonColor;
