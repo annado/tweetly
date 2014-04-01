@@ -86,36 +86,29 @@ static NSInteger CellVerticalPadding = 0;
 }
 
 - (IBAction)onReplyButton:(id)sender {
-    NSLog(@"Reply");
     [[NSNotificationCenter defaultCenter] postNotificationName:ShowComposerNotification object:@{@"replyTweet": _tweet}];
 }
 
 - (IBAction)onRetweetButton:(id)sender {
-    if (_tweet.retweeted) {
-        // TODO
-    } else {
-        [[TwitterClient instance] postRetweet:_tweet.id success:^(Tweet *tweet) {
-            self.retweetButton.tintColor = self.selectedRetweetColor;
-            _tweet.retweeted = YES;
-        } failure:^(NSError *error) {
-        }];
-    }
+    [_tweet retweetWithSuccess:^(Tweet *tweet) {
+        [self updateRetweetButton];
+    } failure:nil];
 }
 
 - (IBAction)onFavoriteButton:(id)sender {
-    if (_tweet.favorited) {
-        [[TwitterClient instance] deleteFavorite:_tweet.id success:^(Tweet *tweet) {
-            self.favoriteButton.tintColor = self.defaultButtonColor;
-            _tweet.favorited = NO;
-        } failure:^(NSError *error) {
-        }];
-    } else {
-        [[TwitterClient instance] postFavorite:_tweet.id success:^(Tweet *tweet) {
-            self.favoriteButton.tintColor = self.selectedFavoriteColor;
-            _tweet.favorited = YES;
-        } failure:^(NSError *error) {
-        }];
-    }
+    [_tweet favoriteWithSuccess:^(Tweet *tweet) {
+        [self updateFavoriteButton];
+    } failure:nil];
+}
+
+- (void)updateRetweetButton
+{
+    self.retweetButton.tintColor = _tweet.retweeted ? self.selectedRetweetColor : self.defaultButtonColor;
+}
+
+- (void)updateFavoriteButton
+{
+    self.favoriteButton.tintColor = _tweet.favorited ? self.selectedFavoriteColor : self.defaultButtonColor;
 }
 
 @end

@@ -12,6 +12,7 @@ extern NSString *const UserDidLoginNotification;
 extern NSString *const UserDidLogoutNotification;
 
 @interface User : NSObject
+@property (nonatomic, strong) NSString *id;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSURL *avatarURL;

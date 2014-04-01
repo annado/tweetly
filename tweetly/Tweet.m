@@ -5,8 +5,9 @@
 //  Created by Anna Do on 03/28/14.
 //  Copyright (c) 2014 Anna Do. All rights reserved.
 //
-
+#import "User.h"
 #import "Tweet.h"
+#import "TwitterClient.h"
 
 @implementation Tweet
 
@@ -33,7 +34,7 @@
                           dateStyle:NSDateFormatterShortStyle
                           timeStyle:NSDateFormatterShortStyle];
 
-        _id = dictionary[@"id"];
+        _id = [dictionary[@"id"] stringValue];
         _text = dictionary[@"text"];
         _favorited = [dictionary[@"favorited"] boolValue];
         _retweeted = [dictionary[@"retweeted"] boolValue];
@@ -48,6 +49,7 @@
             user = dictionary[@"user"];
             _retweet = NO;
         }
+        _userId = [user[@"id"] stringValue];
         _name = user[@"name"];
         _username = user[@"screen_name"];
         _avatarURL = [NSURL URLWithString:user[@"profile_image_url"]];
@@ -84,6 +86,37 @@
     	return[NSString stringWithFormat:@"%dd", diff];
     } else {
     	return @"0s";
+    }
+}
+
+- (void)retweetWithSuccess:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure
+{
+    if (_retweeted) {
+        // TODO
+    } else {
+        if ([[NSString stringWithFormat:@"%@", [User currentUser].id] isEqualToString:[NSString stringWithFormat:@"%@", _userId]]) {
+            // TODO: ignore for now
+        } else {
+            [[TwitterClient instance] postRetweet:_id success:^(Tweet *tweet) {
+                _retweeted = YES;
+                success(tweet);
+            } failure:failure];
+        }
+    }
+}
+
+- (void)favoriteWithSuccess:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure
+{
+    if (_favorited) {
+        [[TwitterClient instance] deleteFavorite:_id success:^(Tweet *tweet) {
+            _favorited = NO;
+            success(tweet);
+        } failure:failure];
+    } else {
+        [[TwitterClient instance] postFavorite:_id success:^(Tweet *tweet) {
+            _favorited = YES;
+            success(tweet);
+        } failure:failure];
     }
 }
 

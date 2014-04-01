@@ -128,7 +128,9 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
           success(tweets); // TODO
       }
       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-          failure(error); // TODO
+          if (failure) {
+              failure(error); // TODO
+          }
       }];
 }
 
@@ -143,7 +145,9 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
           success(tweet); // TODO
       }
       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-          failure(error); // TODO
+          if (failure) {
+              failure(error); // TODO
+          }
           NSLog(@"failed to postTweet: %@", error);
           [self showErrorWithMessage:@"Failed to post Tweet. Please try again later."];
       }];
@@ -159,9 +163,11 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
            success(tweet); // TODO
        }
        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-           failure(error); // TODO
+           if (failure) {
+               failure(error); // TODO
+           }
            NSLog(@"failed to postTweet: %@", error);
-           [self showErrorWithMessage:@"Failed to post Tweet. Please try again later."];
+           [self showErrorWithMessage:@"Failed to retweet. Please try again later."];
        }];
 }
 
@@ -175,9 +181,11 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
            success(tweet); // TODO
        }
        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-           failure(error); // TODO
+           if (failure) {
+               failure(error); // TODO
+           }
            NSLog(@"failed to postTweet: %@", error);
-           [self showErrorWithMessage:@"Failed to post Tweet. Please try again later."];
+           [self showErrorWithMessage:@"Failed to delete retweet. Please try again later."];
        }];
 }
 
@@ -191,7 +199,9 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
            success(tweet); // TODO
        }
        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-           failure(error); // TODO
+           if (failure) {
+               failure(error); // TODO
+           }
            NSLog(@"failed to postTweet: %@", error);
            [self showErrorWithMessage:@"Failed to add Favorite. Please try again later."];
        }];
@@ -207,7 +217,9 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
            success(tweet); // TODO
        }
        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-           failure(error); // TODO
+           if (failure) {
+               failure(error); // TODO
+           }
            NSLog(@"failed to delete favorite: %@", error);
            [self showErrorWithMessage:@"Failed to undo Favorite. Please try again later."];
        }];

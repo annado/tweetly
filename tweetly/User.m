@@ -24,7 +24,7 @@ static NSString * const kCurrentUserKey = @"kCurrentUserKey";
     self = [super init];
     if (self) {
         self.dictionary = dictionary;
-        
+        _id = dictionary[@"id"];
         _name = dictionary[@"name"];
         _username = [NSString stringWithFormat:@"@%@", dictionary[@"screen_name"]];
         _avatarURL = [NSURL URLWithString:dictionary[@"profile_image_url"]];

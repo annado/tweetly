@@ -11,6 +11,7 @@
 @interface Tweet : NSObject
 
 @property (nonatomic, strong, readonly) NSString *id;
+@property (nonatomic, strong, readonly) NSString *userId;
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSString *displayDate;
 @property (nonatomic, strong) NSString *text;
@@ -29,4 +30,6 @@
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 - (NSString *)getUsernameLabel;
 - (NSString *)timeAgo;
+- (void)retweetWithSuccess:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure;
+- (void)favoriteWithSuccess:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure;
 @end
