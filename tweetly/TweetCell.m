@@ -35,6 +35,13 @@
 
 @implementation TweetCell
 
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+    
+    // Configure the view for the selected state
+}
+
 - (void)setTweet:(Tweet *)tweet
 {
     self.selectedFavoriteColor = [UIColor colorWithRed:(204/255.0f) green:(205/255.0f) blue:0 alpha:1];

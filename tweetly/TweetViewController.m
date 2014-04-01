@@ -8,7 +8,9 @@
 
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "TweetViewController.h"
+#import "TimelineViewController.h" // TODO: how to get const
 #import "Tweet.h"
+#import "TwitterClient.h"
 
 @interface TweetViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *retweetLabel;
@@ -18,7 +20,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numRetweetsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numFavoritesLabel;
+@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (nonatomic, strong) UIColor *selectedFavoriteColor;
+@property (nonatomic, strong) UIColor *selectedRetweetColor;
+@property (nonatomic, strong) UIColor *defaultButtonColor;
+- (IBAction)onReplyButton:(id)sender;
+- (IBAction)onRetweet:(id)sender;
+- (IBAction)onFavorite:(id)sender;
 @end
 
 @implementation TweetViewController
@@ -35,6 +45,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.selectedFavoriteColor = [UIColor colorWithRed:(204/255.0f) green:(205/255.0f) blue:0 alpha:1];
+    self.selectedRetweetColor = [UIColor colorWithRed:0 green:(153/255.0f) blue:0 alpha:1];
+    self.defaultButtonColor = [UIColor colorWithRed:(102/255.0f) green:(102/255.0f) blue:(102/255.0f) alpha:1];
     if (_tweet) {
         if (_tweet.retweet) {
             self.retweetLabel.text = _tweet.retweetLabel;
@@ -50,12 +63,48 @@
         self.numRetweetsLabel.text = [@(_tweet.retweetCount) stringValue];
         self.numFavoritesLabel.text = [@(_tweet.favoriteCount) stringValue];
         self.timestampLabel.text = _tweet.displayDate;
+        self.favoriteButton.tintColor = _tweet.favorited ? self.selectedFavoriteColor : self.defaultButtonColor;
+        self.retweetButton.tintColor = _tweet.retweeted ? self.selectedRetweetColor : self.defaultButtonColor;
     }
 }
 
 - (void)setTweet:(Tweet *)tweet
 {
     _tweet = tweet;
+}
+
+- (IBAction)onReplyButton:(id)sender {
+    NSLog(@"Reply");
+    [[NSNotificationCenter defaultCenter] postNotificationName:ShowComposerNotification object:@{@"replyID": _tweet.id}];
+}
+
+- (IBAction)onRetweet:(id)sender {
+    if (_tweet.retweeted) {
+        // TODO
+    } else {
+        [[TwitterClient instance] postRetweet:_tweet.id success:^(Tweet *tweet) {
+            self.retweetButton.tintColor = self.selectedRetweetColor;
+            _tweet.retweeted = YES;
+        } failure:^(NSError *error) {
+        }];
+    }
+
+}
+
+- (IBAction)onFavorite:(id)sender {
+    if (_tweet.favorited) {
+        [[TwitterClient instance] deleteFavorite:_tweet.id success:^(Tweet *tweet) {
+            self.favoriteButton.tintColor = self.defaultButtonColor;
+            _tweet.favorited = NO;
+        } failure:^(NSError *error) {
+        }];
+    } else {
+        [[TwitterClient instance] postFavorite:_tweet.id success:^(Tweet *tweet) {
+            self.favoriteButton.tintColor = self.selectedFavoriteColor;
+            _tweet.favorited = YES;
+        } failure:^(NSError *error) {
+        }];
+    }
 }
 
 @end
