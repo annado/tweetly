@@ -132,11 +132,12 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
       }];
 }
 
-- (void)postTweet:(NSString *)tweet success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure
+- (void)postTweet:(NSString *)tweet replyTo:(Tweet *)replyTweet success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure
 {
     NSString *post = @"1.1/statuses/update.json";
+    NSString *replyID = replyTweet ? replyTweet.id : @"";
     [self POST:post
-   parameters:@{@"status":tweet}
+   parameters:@{@"status":tweet, @"in_reply_to_status_id":replyID}
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
           Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
           success(tweet); // TODO

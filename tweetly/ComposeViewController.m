@@ -52,9 +52,11 @@
 {
     _replyTweet = replyTweet;
 
-    // TODO: consolidate with init code
-    UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(onTweet:)];
-    self.navigationItem.rightBarButtonItem = submitButton;
+    if (replyTweet) {
+        // TODO: consolidate with init code
+        UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(onTweet:)];
+        self.navigationItem.rightBarButtonItem = submitButton;
+    }
 }
 
 - (void)onCancel:(UIBarButtonItem *)button
@@ -70,8 +72,9 @@
 - (void)onTweet:(UIBarButtonItem *)button
 {
     NSString *text = self.composerTextView.text;
+    
     if (text.length > 0) {
-        [[TwitterClient instance] postTweet:text success:^(Tweet *tweet) {
+        [[TwitterClient instance] postTweet:text replyTo:_replyTweet success:^(Tweet *tweet) {
             [self onTweetSuccess:tweet];
         } failure:^(NSError *error) {
             
