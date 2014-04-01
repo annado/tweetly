@@ -10,6 +10,7 @@
 
 @interface Tweet : NSObject
 
+@property (nonatomic, strong, readonly) NSString *id;
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSString *displayDate;
 @property (nonatomic, strong) NSString *text;
@@ -18,6 +19,8 @@
 @property (nonatomic, assign) NSInteger retweetCount;
 @property (nonatomic, assign) NSInteger favoriteCount;
 @property (nonatomic, assign) BOOL retweet;
+@property (nonatomic, assign) BOOL favorited;
+@property (nonatomic, assign) BOOL retweeted;
 @property (nonatomic, strong, readonly) NSString *retweetLabel;
 @property (nonatomic, strong, readonly) NSURL *avatarURL;
 

@@ -29,12 +29,7 @@ static NSString *CellIdentifier = @"TweetCell";
     if (self) {
         self.title = @"Timeline";
         self.tweets = [[NSMutableArray alloc] init];
-        [[TwitterClient instance] timelineWithSuccess:^(NSMutableArray *tweets) {
-            self.tweets = [Tweet tweetsWithArray:tweets];
-            [self.tableView reloadData];
-        } failure:^(NSError *error) {
-            NSLog(@"Failed to get tweets");
-        }];
+        [self loadTweets];
         
         // Configure the nav buttons
         UIBarButtonItem *logOutButton = [[UIBarButtonItem alloc] initWithTitle:@"Log Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogOutButton:)];
@@ -64,10 +59,22 @@ static NSString *CellIdentifier = @"TweetCell";
     self.refreshControl = refreshControl;
 }
 
+- (void)loadTweets
+{
+    [self.refreshControl beginRefreshing];
+    [[TwitterClient instance] timelineWithSuccess:^(NSMutableArray *tweets) {
+        self.tweets = [Tweet tweetsWithArray:tweets];
+        [self.refreshControl endRefreshing];
+        [self.tableView reloadData];
+    } failure:^(NSError *error) {
+        NSLog(@"Failed to get tweets");
+        [self.refreshControl endRefreshing];
+    }];
+}
+
 - (void)refresh
 {
-    NSLog(@"Reloading...");
-    [self.refreshControl endRefreshing];
+    [self loadTweets];
 }
 
 - (void)onLogOutButton:(UIBarButtonItem *)button

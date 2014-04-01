@@ -148,6 +148,70 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
       }];
 }
 
+- (void)postRetweet:(NSString *)tweetID success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure
+{
+    NSString *post = [NSString stringWithFormat:@"1.1/statuses/retweet/%@.json", tweetID];
+    [self POST:post
+    parameters:nil
+       success:^(AFHTTPRequestOperation *operation, id responseObject) {
+           Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
+           success(tweet); // TODO
+       }
+       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+           failure(error); // TODO
+           NSLog(@"failed to postTweet: %@", error);
+           [self showErrorWithMessage:@"Failed to post Tweet. Please try again later."];
+       }];
+}
+
+- (void)deleteRetweet:(NSString *)tweetID success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure
+{
+    NSString *post = [NSString stringWithFormat:@"1.1/statuses/retweet/%@.json", tweetID];
+    [self POST:post
+    parameters:nil
+       success:^(AFHTTPRequestOperation *operation, id responseObject) {
+           Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
+           success(tweet); // TODO
+       }
+       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+           failure(error); // TODO
+           NSLog(@"failed to postTweet: %@", error);
+           [self showErrorWithMessage:@"Failed to post Tweet. Please try again later."];
+       }];
+}
+
+- (void)postFavorite:(NSString *)tweetID success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure
+{
+    NSString *post = @"1.1/favorites/create.json";
+    [self POST:post
+    parameters:@{@"id":tweetID}
+       success:^(AFHTTPRequestOperation *operation, id responseObject) {
+           Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
+           success(tweet); // TODO
+       }
+       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+           failure(error); // TODO
+           NSLog(@"failed to postTweet: %@", error);
+           [self showErrorWithMessage:@"Failed to add Favorite. Please try again later."];
+       }];
+}
+
+- (void)deleteFavorite:(NSString *)tweetID success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure
+{
+    NSString *post = @"1.1/favorites/destroy.json";
+    [self POST:post
+    parameters:@{@"id":tweetID}
+       success:^(AFHTTPRequestOperation *operation, id responseObject) {
+           Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
+           success(tweet); // TODO
+       }
+       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+           failure(error); // TODO
+           NSLog(@"failed to delete favorite: %@", error);
+           [self showErrorWithMessage:@"Failed to undo Favorite. Please try again later."];
+       }];
+}
+
 #pragma mark private methods
 - (void)showErrorWithMessage:(NSString *)message
 {

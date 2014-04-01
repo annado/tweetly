@@ -20,4 +20,8 @@
 - (void)oAuthCallbackWithURL:(NSURL *)url;
 - (void)timelineWithSuccess:(void (^)(NSMutableArray *tweets))success failure:(void (^)(NSError *error))failure;
 - (void)postTweet:(NSString *)tweet success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure;
+- (void)postRetweet:(NSString *)tweetID success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure;
+- (void)deleteRetweet:(NSString *)tweetID success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure;
+- (void)postFavorite:(NSString *)tweetID success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure;
+- (void)deleteFavorite:(NSString *)tweetID success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure;
 @end

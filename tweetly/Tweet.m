@@ -29,7 +29,12 @@
         _displayDate = [NSDateFormatter localizedStringFromDate:_date
                           dateStyle:NSDateFormatterShortStyle
                           timeStyle:NSDateFormatterShortStyle];
+//        NSLog(@"display date? %@", _displayDate);
+
+        _id = dictionary[@"id"];
         _text = dictionary[@"text"];
+        _favorited = [dictionary[@"favorited"] boolValue];
+        _retweeted = [dictionary[@"retweeted"] boolValue];
 
         NSDictionary *retweet = dictionary[@"retweeted_status"];
         NSDictionary *user;
