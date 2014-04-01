@@ -10,6 +10,7 @@
 #import "ComposeViewController.h"
 #import "TwitterClient.h"
 #import "User.h"
+#import "Tweet.h"
 
 @interface ComposeViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
@@ -41,17 +42,19 @@
     [super viewDidLoad];
     [self setupUserProfile];
     self.composerTextView.delegate = self;
+    [self.composerTextView becomeFirstResponder];
+    if (_replyTweet) {
+        self.composerTextView.text = [NSString stringWithFormat:@"%@ ", [_replyTweet getUsernameLabel]];
+    }
 }
 
-- (void)setReplyID:(NSString *)replyID
+- (void)setReplyTweet:(Tweet *)replyTweet
 {
-    if (replyID) {
-        _replyID = replyID;
-        
-        // TODO: consolidate with init code
-        UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(onTweet:)];
-        self.navigationItem.rightBarButtonItem = submitButton;
-    }
+    _replyTweet = replyTweet;
+
+    // TODO: consolidate with init code
+    UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(onTweet:)];
+    self.navigationItem.rightBarButtonItem = submitButton;
 }
 
 - (void)onCancel:(UIBarButtonItem *)button
@@ -69,7 +72,6 @@
     NSString *text = self.composerTextView.text;
     if (text.length > 0) {
         [[TwitterClient instance] postTweet:text success:^(Tweet *tweet) {
-            NSLog(@"Success!:");
             [self onTweetSuccess:tweet];
         } failure:^(NSError *error) {
             

@@ -87,7 +87,7 @@ static NSInteger CellVerticalPadding = 0;
 
 - (IBAction)onReplyButton:(id)sender {
     NSLog(@"Reply");
-    [[NSNotificationCenter defaultCenter] postNotificationName:ShowComposerNotification object:@{@"replyID": _tweet.id}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ShowComposerNotification object:@{@"replyTweet": _tweet}];
 }
 
 - (IBAction)onRetweetButton:(id)sender {

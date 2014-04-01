@@ -75,7 +75,7 @@
 
 - (IBAction)onReplyButton:(id)sender {
     NSLog(@"Reply");
-    [[NSNotificationCenter defaultCenter] postNotificationName:ShowComposerNotification object:@{@"replyID": _tweet.id}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ShowComposerNotification object:@{@"replyTweet": _tweet}];
 }
 
 - (IBAction)onRetweet:(id)sender {

@@ -91,11 +91,11 @@ static NSString *CellIdentifier = @"TweetCell";
     [self showComposer:nil];
 }
 
-- (void)showComposer:(NSString *)replyID
+- (void)showComposer:(Tweet *)replyTweet
 {
     ComposeViewController *composeViewController = [[ComposeViewController alloc] init];
     composeViewController.delegate = self;
-    composeViewController.replyID = replyID;
+    composeViewController.replyTweet = replyTweet;
     UINavigationController *navigationController = [[UINavigationController alloc]
                                                     initWithRootViewController:composeViewController];
     [self presentViewController:navigationController animated:YES completion: nil];
@@ -103,8 +103,8 @@ static NSString *CellIdentifier = @"TweetCell";
 
 - (void)onComposeNotification:(NSNotification *)notification
 {
-    NSString *replyID = notification.object[@"replyID"];
-    [self showComposer:replyID];
+    Tweet *replyTweet = notification.object[@"replyTweet"];
+    [self showComposer:replyTweet];
 }
 
 - (void)onViewTweet:(Tweet *)tweet
