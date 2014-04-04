@@ -15,13 +15,19 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="fZs-3w-Ysa">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="fZs-3w-Ysa">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="fZs-3w-Ysa" secondAttribute="bottom" id="01z-6n-ZPO"/>
+                <constraint firstAttribute="trailing" secondItem="fZs-3w-Ysa" secondAttribute="trailing" id="rBk-mX-OLo"/>
+                <constraint firstItem="fZs-3w-Ysa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="zJ1-NH-Oxl"/>
+                <constraint firstItem="fZs-3w-Ysa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="zZO-Es-Lqx"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
