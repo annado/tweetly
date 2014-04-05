@@ -102,27 +102,18 @@
     } else if (panGestureRecognizer.state == UIGestureRecognizerStateEnded) {
 //        NSLog(@"Gesture ended: %@", NSStringFromCGPoint(point));
         if (self.panning) {
-            [UIView animateWithDuration:0.5
-                             animations:^{
-                                 NSInteger minWidthMult = 1;
-                                 if (velocity.x < 0) {
-                                     minWidthMult = 3;
-                                 }
-                                 
-                                 if (point.x > (minWidthMult * frame.size.width/4)) {
-                                     CGRect frame = self.contentView.frame;
-                                     frame.origin.x = frame.size.width - frame.size.width/6;
-                                     self.contentView.frame = frame;
-                                 } else {
-                                     CGRect frame = self.contentView.frame;
-                                     frame.origin.x = 0;
-                                     self.contentView.frame = frame;
-                                 }
-                             }
-                             completion:^(BOOL finished){ if(finished) {
-                self.panning = NO;
+            self.panning = NO;
+
+            NSInteger minWidthMult = 1;
+            if (velocity.x < 0) { // panning to the left
+                minWidthMult = 3;
             }
-                             }];
+            
+            if (point.x > (minWidthMult * frame.size.width/4)) {
+                [self openMenu];
+            } else {
+                [self closeMenu];
+            }
         }
 
     }
@@ -145,6 +136,20 @@
                              self.panning = NO;
                          }
                      }];
+
+}
+
+- (void)openMenu
+{
+    CGRect frame = self.contentView.frame;
+    frame.origin.x = frame.size.width - frame.size.width/6;
+    self.contentView.frame = frame;
+
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         self.contentView.frame = frame;
+                     }
+                     completion:nil];
 
 }
 
