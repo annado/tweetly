@@ -63,17 +63,34 @@ static NSString *CellIdentifier = @"TweetCell";
     self.refreshControl = refreshControl;
 }
 
+- (void)setMentions:(BOOL)mentions
+{
+    if (mentions != _mentions) {
+        _mentions = mentions;
+        [self loadTweets];
+    }
+    self.title = _mentions ? @"Mentions" : @"Timeline";
+}
+
 - (void)loadTweets
 {
     [self.refreshControl beginRefreshing];
-    [[TwitterClient instance] timelineWithSuccess:^(NSMutableArray *tweets) {
+    
+    void (^success)(NSMutableArray *) = ^(NSMutableArray *tweets) {
         self.tweets = [Tweet tweetsWithArray:tweets];
         [self.refreshControl endRefreshing];
         [self.tableView reloadData];
-    } failure:^(NSError *error) {
+    };
+    void (^failure)(NSError *) = ^(NSError *error) {
         NSLog(@"Failed to get tweets");
         [self.refreshControl endRefreshing];
-    }];
+    };
+
+    if (self.mentions) {
+        [[TwitterClient instance] mentionsWithSuccess:success failure:failure];
+    } else {
+        [[TwitterClient instance] timelineWithSuccess:success failure:failure];
+    }
 }
 
 - (void)refresh

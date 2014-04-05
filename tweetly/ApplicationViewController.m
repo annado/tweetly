@@ -9,11 +9,13 @@
 #import "ApplicationViewController.h"
 #import "MenuViewController.h"
 #import "TimelineViewController.h"
+#import "NSDictionary+BDBOAuth1Manager.h"
 
 @interface ApplicationViewController ()
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (nonatomic, strong) MenuViewController *menuViewController;
 @property (nonatomic, strong) UINavigationController *timelineNavController;
+@property (nonatomic, strong) TimelineViewController *timelineViewController;
 @property (nonatomic, assign) NSInteger startingX;
 @property (nonatomic, assign) BOOL panning;
 @end
@@ -34,18 +36,38 @@
         UINavigationController *navigationController = [[UINavigationController alloc]
                                                         initWithRootViewController:timelineViewController];
 
+        self.timelineViewController = timelineViewController;
         self.timelineNavController = navigationController;
         [self addChildViewController:self.timelineNavController];
     }
     return self;
 }
 
+- (void)openURL:(NSURL *)url
+{
+    NSDictionary *parameters = [NSDictionary dictionaryFromQueryString:url.query];
+    
+    [self closeMenu];
+    if ([url.host isEqualToString:@"timeline"]) {
+        self.timelineViewController.mentions = NO;
+    } else if ([url.host isEqualToString:@"mentions"]) {
+        self.timelineViewController.mentions = YES;
+    } else if ([url.host isEqualToString:@"profile"]) {
+        NSLog(@"profiles link");
+        if (parameters[@"user"]) {
+            NSLog(@"profile for user: %@", parameters[@"user"]);
+        } else {
+            NSLog(@"profile for currentUser");
+        }
+    }
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     UIView *mainView = self.timelineNavController.view;
     UIView *menuView = self.menuViewController.view;
-//    self.menuView = menuView;
     [self.view addSubview:menuView];
     [self.contentView addSubview:mainView];
     [self.view bringSubviewToFront:self.contentView];
@@ -104,6 +126,26 @@
         }
 
     }
+}
+
+- (void)closeMenu
+{
+    CGRect frame = self.contentView.frame;
+    if (frame.origin.x == 0) {
+        return;
+    }
+    
+    frame.origin.x = 0;
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         self.contentView.frame = frame;
+                     }
+                     completion:^(BOOL finished){
+                         if(finished) {
+                             self.panning = NO;
+                         }
+                     }];
+
 }
 
 @end

@@ -61,6 +61,9 @@
     if ([url.scheme isEqualToString:@"tweetly"]) {
         if ([url.host isEqualToString:@"oauth"]) {
             [[TwitterClient instance] oAuthCallbackWithURL:url];
+        } else if ([User currentUser] != nil) {
+            ApplicationViewController *appViewController = (ApplicationViewController *)self.window.rootViewController;
+            [appViewController openURL:url];
         }
         return YES;
     }

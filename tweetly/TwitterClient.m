@@ -134,6 +134,22 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
       }];
 }
 
+- (void)mentionsWithSuccess:(void (^)(NSMutableArray *tweets))success failure:(void (^)(NSError *error))failure
+{
+    NSString *timeline = @"1.1/statuses/mentions_timeline.json";
+    [self GET:timeline
+   parameters:@{@"count" : @"20"}
+      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+          NSMutableArray *tweets = (NSMutableArray *)responseObject;
+          success(tweets); // TODO
+      }
+      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          if (failure) {
+              failure(error); // TODO
+          }
+      }];
+}
+
 - (void)postTweet:(NSString *)tweet replyTo:(Tweet *)replyTweet success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure
 {
     NSString *post = @"1.1/statuses/update.json";

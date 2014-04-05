@@ -12,5 +12,5 @@
 extern NSString *const ShowComposerNotification;
 
 @interface TimelineViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ComposeViewDelegate>
-
+@property (nonatomic, assign) BOOL mentions;
 @end

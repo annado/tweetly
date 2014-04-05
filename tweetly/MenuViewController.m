@@ -23,7 +23,7 @@ static NSString *CellIdentifier = @"MenuItemCell";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.menuItems = @[
-                           @{@"name": @"Profile", @"url":@"tweetly://profile?user=%@"},
+                           @{@"name": @"Profile", @"url":@"tweetly://profile"},
                            @{@"name": @"Timeline", @"url":@"tweetly://timeline"},
                            @{@"name": @"Mentions", @"url":@"tweetly://mentions"}
                            ];
@@ -52,7 +52,13 @@ static NSString *CellIdentifier = @"MenuItemCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return self.menuItems.count;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *urlString = self.menuItems[indexPath.row][@"url"];
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:urlString]];
 }
 
 @end

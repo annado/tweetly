@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ApplicationViewController : UIViewController
-
+- (void)openURL:(NSURL *)url;
 @end
