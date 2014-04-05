@@ -37,6 +37,8 @@
 		58E432D818EF44670077CB22 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E432D618EF44670077CB22 /* MenuViewController.xib */; };
 		58E432DC18EF45630077CB22 /* MenuItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E432DA18EF45630077CB22 /* MenuItemCell.m */; };
 		58E432DD18EF45630077CB22 /* MenuItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E432DB18EF45630077CB22 /* MenuItemCell.xib */; };
+		58E432E118EF5CD20077CB22 /* ApplicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E432DF18EF5CD20077CB22 /* ApplicationViewController.m */; };
+		58E432E218EF5CD20077CB22 /* ApplicationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E432E018EF5CD20077CB22 /* ApplicationViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,9 @@
 		58E432D918EF45630077CB22 /* MenuItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItemCell.h; sourceTree = "<group>"; };
 		58E432DA18EF45630077CB22 /* MenuItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItemCell.m; sourceTree = "<group>"; };
 		58E432DB18EF45630077CB22 /* MenuItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuItemCell.xib; sourceTree = "<group>"; };
+		58E432DE18EF5CD20077CB22 /* ApplicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationViewController.h; sourceTree = "<group>"; };
+		58E432DF18EF5CD20077CB22 /* ApplicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationViewController.m; sourceTree = "<group>"; };
+		58E432E018EF5CD20077CB22 /* ApplicationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplicationViewController.xib; sourceTree = "<group>"; };
 		AE0A0C8AEA954EAFA1F6461D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		C1DBEBC2DD404C9FAE1AEED1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -225,6 +230,9 @@
 				58E432D418EF44670077CB22 /* MenuViewController.h */,
 				58E432D518EF44670077CB22 /* MenuViewController.m */,
 				58E432D618EF44670077CB22 /* MenuViewController.xib */,
+				58E432DE18EF5CD20077CB22 /* ApplicationViewController.h */,
+				58E432DF18EF5CD20077CB22 /* ApplicationViewController.m */,
+				58E432E018EF5CD20077CB22 /* ApplicationViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -333,6 +341,7 @@
 				5807711918E55D30004503E6 /* InfoPlist.strings in Resources */,
 				588255DE18E91BFA00AB7E1A /* TweetViewController.xib in Resources */,
 				588255D918E8ED1600AB7E1A /* ComposeViewController.xib in Resources */,
+				58E432E218EF5CD20077CB22 /* ApplicationViewController.xib in Resources */,
 				58E432D818EF44670077CB22 /* MenuViewController.xib in Resources */,
 				58E432DD18EF45630077CB22 /* MenuItemCell.xib in Resources */,
 				5807714818E62EF3004503E6 /* SignInViewController.xib in Resources */,
@@ -396,6 +405,7 @@
 				588255D818E8ED1600AB7E1A /* ComposeViewController.m in Sources */,
 				588255DD18E91BFA00AB7E1A /* TweetViewController.m in Sources */,
 				58E432DC18EF45630077CB22 /* MenuItemCell.m in Sources */,
+				58E432E118EF5CD20077CB22 /* ApplicationViewController.m in Sources */,
 				5807711F18E55D30004503E6 /* AppDelegate.m in Sources */,
 				588255CA18E6672F00AB7E1A /* Tweet.m in Sources */,
 				588255C618E663E900AB7E1A /* TweetCell.m in Sources */,

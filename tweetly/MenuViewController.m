@@ -22,8 +22,6 @@ static NSString *CellIdentifier = @"MenuItemCell";
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self.tableView registerNib:[UINib nibWithNibName:@"MenuItemCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
-        
         self.menuItems = @[
                            @{@"name": @"Profile", @"url":@"tweetly://profile?user=%@"},
                            @{@"name": @"Timeline", @"url":@"tweetly://timeline"},
@@ -38,6 +36,8 @@ static NSString *CellIdentifier = @"MenuItemCell";
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    [self.tableView registerNib:[UINib nibWithNibName:@"MenuItemCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+    
 }
 
 #pragma mark TableView delegate methods
