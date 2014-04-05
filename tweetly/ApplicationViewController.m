@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (nonatomic, strong) MenuViewController *menuViewController;
 @property (nonatomic, strong) UINavigationController *navController;
+@property (nonatomic, assign) NSInteger startingX;
+@property (nonatomic, assign) BOOL panning;
 @end
 
 @implementation ApplicationViewController
@@ -48,8 +50,7 @@
     [self.contentView bringSubviewToFront:mainView];
 
     // Gesture recognizer
-    UIScreenEdgePanGestureRecognizer *panGestureRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(onPan:)];
-    panGestureRecognizer.edges = UIRectEdgeLeft;
+    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPan:)];
     [self.view addGestureRecognizer:panGestureRecognizer];
 }
 
@@ -59,36 +60,48 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)onPan:(UIScreenEdgePanGestureRecognizer *)panGestureRecognizer
+- (void)onPan:(UIPanGestureRecognizer *)panGestureRecognizer
 {
     CGPoint point = [panGestureRecognizer locationInView:self.contentView];
-//    CGPoint velocity = [panGestureRecognizer velocityInView:self.contentView];
+    CGPoint velocity = [panGestureRecognizer velocityInView:self.contentView];
     
     CGRect frame = self.navController.view.frame;
 
     if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
 //        NSLog(@"Gesture began at: %@", NSStringFromCGPoint(point));
+        self.panning = (point.x > 0 && point.x - frame.origin.x < frame.size.width/4);
+        self.startingX = point.x;
     } else if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
-//        NSLog(@"Gesture changed: %@", NSStringFromCGPoint(point));
-        frame.origin.x = point.x;
-        self.navController.view.frame = frame;
+        if (point.x > 0 && self.panning) {
+            frame.origin.x = point.x - self.startingX;
+            self.navController.view.frame = frame;
+        }
     } else if (panGestureRecognizer.state == UIGestureRecognizerStateEnded) {
 //        NSLog(@"Gesture ended: %@", NSStringFromCGPoint(point));
-
-        [UIView animateWithDuration:0.5
-                         animations:^{
-                             if (point.x > (frame.size.width/3)) {
-                                 CGRect frame = self.navController.view.frame;
-                                 frame.origin.x = frame.size.width - frame.size.width/6;
-                                 self.navController.view.frame = frame;
-                             } else {
-                                 CGRect frame = self.navController.view.frame;
-                                 frame.origin.x = 0;
-                                 self.navController.view.frame = frame;
+        if (self.panning) {
+            [UIView animateWithDuration:0.5
+                             animations:^{
+                                 NSInteger minWidthMult = 1;
+                                 if (velocity.x < 0) {
+                                     minWidthMult = 3;
+                                 }
+                                 
+                                 if (point.x > (minWidthMult * frame.size.width/4)) {
+                                     CGRect frame = self.navController.view.frame;
+                                     frame.origin.x = frame.size.width - frame.size.width/6;
+                                     self.navController.view.frame = frame;
+                                 } else {
+                                     CGRect frame = self.navController.view.frame;
+                                     frame.origin.x = 0;
+                                     self.navController.view.frame = frame;
+                                 }
                              }
-                         }
-                         completion:^(BOOL finished){ if(finished) {}
-                         }];
+                             completion:^(BOOL finished){ if(finished) {
+                self.panning = NO;
+            }
+                             }];
+        }
+
     }
 }
 
