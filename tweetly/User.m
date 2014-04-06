@@ -30,6 +30,10 @@ static NSString * const kCurrentUserKey = @"kCurrentUserKey";
         _avatarURL = [NSURL URLWithString:dictionary[@"profile_image_url"]];
         _backgroundURL = [NSURL URLWithString:dictionary[@"profile_background_image_url"]];
         _textHexColor = dictionary[@"profile_text_color"];
+        _tweetCount = [dictionary[@"statuses_count"] intValue];
+        _followerCount = [dictionary[@"followers_count"] intValue];
+        _followingCount = [dictionary[@"friends_count"] intValue];
+                                               
     }
     return self;
 }

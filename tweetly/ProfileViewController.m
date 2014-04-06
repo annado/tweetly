@@ -16,6 +16,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UIView *timelineView;
+@property (weak, nonatomic) IBOutlet UILabel *numTweetsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numFollowingLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numFollowersLabel;
 
 @end
 
@@ -53,6 +57,9 @@
     UIColor *textColor = [UIColor colorWithString:_user.textHexColor];
     self.nameLabel.textColor = textColor;
     self.usernameLabel.textColor = textColor;
+    self.numTweetsLabel.text = [@(_user.tweetCount) stringValue];
+    self.numFollowersLabel.text = [@(_user.followerCount) stringValue];
+    self.numFollowingLabel.text = [@(_user.followingCount) stringValue];
 }
 
 - (void)didReceiveMemoryWarning
