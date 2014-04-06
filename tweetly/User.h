@@ -16,6 +16,8 @@ extern NSString *const UserDidLogoutNotification;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSURL *avatarURL;
+@property (nonatomic, strong) NSURL *backgroundURL;
+@property (nonatomic, strong) NSString *textHexColor;
 - initWithDictionary:(NSDictionary *)dictionary;
 + (User *)currentUser;
 + (void)setCurrentUser:(User *)currentUser;

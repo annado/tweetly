@@ -9,13 +9,16 @@
 #import "ApplicationViewController.h"
 #import "MenuViewController.h"
 #import "TimelineViewController.h"
+#import "ProfileViewController.h"
 #import "NSDictionary+BDBOAuth1Manager.h"
+#import "User.h"
 
 @interface ApplicationViewController ()
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (nonatomic, strong) MenuViewController *menuViewController;
 @property (nonatomic, strong) UINavigationController *timelineNavController;
 @property (nonatomic, strong) TimelineViewController *timelineViewController;
+@property (nonatomic, strong) ProfileViewController *profileViewController;
 @property (nonatomic, assign) NSInteger startingX;
 @property (nonatomic, assign) BOOL panning;
 @end
@@ -38,7 +41,9 @@
 
         self.timelineViewController = timelineViewController;
         self.timelineNavController = navigationController;
+        self.profileViewController = [[ProfileViewController alloc] initWithUser:[User currentUser]];
         [self addChildViewController:self.timelineNavController];
+        [self addChildViewController:self.profileViewController];
     }
     return self;
 }
@@ -50,14 +55,17 @@
     [self closeMenu];
     if ([url.host isEqualToString:@"timeline"]) {
         self.timelineViewController.mentions = NO;
+        [self.view bringSubviewToFront:self.contentView];
     } else if ([url.host isEqualToString:@"mentions"]) {
         self.timelineViewController.mentions = YES;
+        [self.view bringSubviewToFront:self.contentView];
     } else if ([url.host isEqualToString:@"profile"]) {
         NSLog(@"profiles link");
         if (parameters[@"user"]) {
             NSLog(@"profile for user: %@", parameters[@"user"]);
         } else {
             NSLog(@"profile for currentUser");
+            [self.view bringSubviewToFront:self.profileViewController.view];
         }
     }
 }
@@ -68,6 +76,7 @@
     [super viewDidLoad];
     UIView *mainView = self.timelineNavController.view;
     UIView *menuView = self.menuViewController.view;
+    [self.view addSubview:self.profileViewController.view];
     [self.view addSubview:menuView];
     [self.contentView addSubview:mainView];
     [self.view bringSubviewToFront:self.contentView];

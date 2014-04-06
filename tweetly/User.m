@@ -28,6 +28,8 @@ static NSString * const kCurrentUserKey = @"kCurrentUserKey";
         _name = dictionary[@"name"];
         _username = [NSString stringWithFormat:@"@%@", dictionary[@"screen_name"]];
         _avatarURL = [NSURL URLWithString:dictionary[@"profile_image_url"]];
+        _backgroundURL = [NSURL URLWithString:dictionary[@"profile_background_image_url"]];
+        _textHexColor = dictionary[@"profile_text_color"];
     }
     return self;
 }
