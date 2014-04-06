@@ -55,17 +55,17 @@
     [self closeMenu];
     if ([url.host isEqualToString:@"timeline"]) {
         self.timelineViewController.mentions = NO;
-        [self.view bringSubviewToFront:self.contentView];
+        [self.contentView bringSubviewToFront:self.timelineNavController.view];
     } else if ([url.host isEqualToString:@"mentions"]) {
         self.timelineViewController.mentions = YES;
-        [self.view bringSubviewToFront:self.contentView];
+        [self.contentView bringSubviewToFront:self.timelineNavController.view];
     } else if ([url.host isEqualToString:@"profile"]) {
         NSLog(@"profiles link");
         if (parameters[@"user"]) {
             NSLog(@"profile for user: %@", parameters[@"user"]);
         } else {
             NSLog(@"profile for currentUser");
-            [self.view bringSubviewToFront:self.profileViewController.view];
+            [self.contentView bringSubviewToFront:self.profileViewController.view];
         }
     }
 }
@@ -76,10 +76,11 @@
     [super viewDidLoad];
     UIView *mainView = self.timelineNavController.view;
     UIView *menuView = self.menuViewController.view;
-    [self.view addSubview:self.profileViewController.view];
+    [self.contentView addSubview:self.profileViewController.view];
     [self.view addSubview:menuView];
     [self.contentView addSubview:mainView];
     [self.view bringSubviewToFront:self.contentView];
+    [self.contentView bringSubviewToFront:self.timelineNavController.view];
 
     // Gesture recognizer
     UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPan:)];
