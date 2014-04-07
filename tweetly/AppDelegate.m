@@ -19,6 +19,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:(85/255.0f) green:(172/255.0f) blue:(238/255.0f) alpha:1]];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue" size:15]} forState:UIControlStateNormal];
+    [[UILabel appearance] setTextColor:[UIColor darkGrayColor]];
 
     [self updateRootViewController];
     

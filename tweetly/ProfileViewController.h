@@ -10,6 +10,8 @@
 
 @class User;
 
+extern NSString *const ShowComposerNotification;
+
 @interface ProfileViewController : UIViewController
 @property (nonatomic, strong) User *user;
 - (id)initWithUser:(User *)user;

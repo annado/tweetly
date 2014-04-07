@@ -51,6 +51,7 @@
     if (tweet.retweet) {
         self.retweetLabel.text = tweet.retweetLabel;
     } else {
+        self.retweetLabel.text = @"";
         NSLayoutConstraint *constraint = self.retweetLabel.constraints[0];
         constraint.constant = 0.f;
     }
@@ -58,7 +59,11 @@
     self.nameLabel.text = _tweet.name;
     self.usernameLabel.text = [_tweet getUsernameLabel];
     self.tweetLabel.text = _tweet.text;
+    
     [self.avatarImageView setImageWithURL:_tweet.avatarURL];
+    self.avatarImageView.layer.cornerRadius = 4;
+    self.avatarImageView.clipsToBounds = YES;
+
     self.timestampLabel.text = [_tweet timeAgo];
     self.favoriteButton.imageView.image = [self.favoriteButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     self.favoriteButton.tintColor = _tweet.favorited ? self.selectedFavoriteColor : self.defaultButtonColor;
@@ -83,21 +88,19 @@
 }
 
 static NSInteger TweetLabelMaxWidth = 218;
-static NSInteger ActionViewHeight = 16 + 20;
-static NSInteger NameLabelHeight = 16 + 4;
+static NSInteger ActionViewHeight = 30;
+static NSInteger NameLabelHeight = 18;
 static NSInteger RetweetLabelHeight = 16;
-static NSInteger CellVerticalPadding = 0;
+static NSInteger CellVerticalPadding = 10;
 
 + (NSInteger)displayHeightForTweet:(Tweet *)tweet
 {
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"HelveticaNeue-Light" size:14],NSFontAttributeName, nil];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"HelveticaNeue-Light" size:13],NSFontAttributeName, nil];
     NSInteger tweetHeight = [tweet.text boundingRectWithSize:CGSizeMake(TweetLabelMaxWidth, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size.height;
 
     NSInteger height = tweetHeight + ActionViewHeight + NameLabelHeight + CellVerticalPadding;
     if (tweet.retweet) {
         height += RetweetLabelHeight;
-    } else {
-        height += 0;
     }
     return height;
 }

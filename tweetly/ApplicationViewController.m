@@ -18,7 +18,7 @@
 @property (nonatomic, strong) MenuViewController *menuViewController;
 @property (nonatomic, strong) UINavigationController *timelineNavController;
 @property (nonatomic, strong) TimelineViewController *timelineViewController;
-@property (nonatomic, strong) ProfileViewController *profileViewController;
+@property (nonatomic, strong) UINavigationController *profileViewController;
 @property (nonatomic, assign) NSInteger startingX;
 @property (nonatomic, assign) BOOL panning;
 @end
@@ -31,14 +31,15 @@
     if (self) {
         // init Menu view
         _menuViewController = [[MenuViewController alloc] init];
-        [self addChildViewController:_menuViewController];
-        
         
         // init Timeline/Profile view
         _timelineViewController = [[TimelineViewController alloc] init];
         _timelineNavController = [[UINavigationController alloc]
                                                         initWithRootViewController:_timelineViewController];
-        _profileViewController = [[ProfileViewController alloc] initWithUser:[User currentUser]];
+
+        ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:[User currentUser]];
+        _profileViewController = [[UINavigationController alloc] initWithRootViewController:profileViewController];
+        
         [self addChildViewController:_timelineNavController];
         [self addChildViewController:_profileViewController];
     }
@@ -71,8 +72,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // init Menu
+    UINavigationController *menuNavController = [[UINavigationController alloc] initWithRootViewController:_menuViewController];
+    UIView *menuView = menuNavController.view;
+    [self addChildViewController:menuNavController];
+
+    CGRect frame = menuView.frame;
+    frame.size.width = frame.size.width - frame.size.width/6;
+    menuView.frame = frame;
+
     UIView *mainView = _timelineNavController.view;
-    UIView *menuView = _menuViewController.view;
     [_contentView addSubview:_profileViewController.view];
     [self.view addSubview:menuView];
     [_contentView addSubview:mainView];

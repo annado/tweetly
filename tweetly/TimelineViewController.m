@@ -8,6 +8,7 @@
 
 #import "TimelineViewController.h"
 #import "ComposeViewController.h"
+#import "ProfileViewController.h"
 #import "TweetViewController.h"
 #import "TwitterClient.h"
 #import "Tweet.h"
@@ -34,9 +35,6 @@ static NSString *CellIdentifier = @"TweetCell";
         [self loadTweets];
         
         // Configure the nav buttons
-        UIBarButtonItem *logOutButton = [[UIBarButtonItem alloc] initWithTitle:@"Log Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogOutButton:)];
-        self.navigationItem.leftBarButtonItem = logOutButton;
-        
         UIBarButtonItem *composeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onComposeButton:)];
         self.navigationItem.rightBarButtonItem = composeButton;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onComposeNotification:) name:ShowComposerNotification object:nil];
@@ -96,11 +94,6 @@ static NSString *CellIdentifier = @"TweetCell";
 - (void)refresh
 {
     [self loadTweets];
-}
-
-- (void)onLogOutButton:(UIBarButtonItem *)button
-{
-    [[TwitterClient instance] logout];
 }
 
 - (void)onComposeButton:(UIBarButtonItem *)button

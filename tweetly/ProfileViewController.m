@@ -9,6 +9,7 @@
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import <ColorUtils/ColorUtils.h>
 #import "ProfileViewController.h"
+#import "ComposeViewController.h"
 #import "User.h"
 
 @interface ProfileViewController ()
@@ -30,6 +31,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        UIBarButtonItem *composeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onComposeButton:)];
+        self.navigationItem.rightBarButtonItem = composeButton;
     }
     return self;
 }
@@ -39,6 +42,7 @@
     self = [super init];
     if (self) {
         _user = user;
+        self.title = (_user == [User currentUser]) ? @"Me" : @"Profile";
     }
     return self;
 }
@@ -48,6 +52,7 @@
     [super viewDidLoad];
     [self.backgroundImageView setImageWithURL:_user.backgroundURL];
     [self.profileImageView setImageWithURL:_user.avatarURL];
+    // add rounded corners
     self.profileImageView.layer.cornerRadius = 3;
     self.profileImageView.clipsToBounds = YES;
     
@@ -66,6 +71,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)onComposeButton:(UIBarButtonItem *)buttonItem
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:ShowComposerNotification object:@{@"replyTweet": @""}];
 }
 
 @end
