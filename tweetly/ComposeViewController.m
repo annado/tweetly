@@ -54,7 +54,7 @@
     self.composerTextView.delegate = self;
     [self.composerTextView becomeFirstResponder];
     if (_replyTweet) {
-        self.composerTextView.text = [NSString stringWithFormat:@"%@ ", [_replyTweet getUsernameLabel]];
+        self.composerTextView.text = [NSString stringWithFormat:@"%@ ", _replyTweet.author.username];
     }
 }
 

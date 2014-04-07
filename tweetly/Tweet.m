@@ -51,21 +51,11 @@
         }
         
         _author = [[User alloc] initWithDictionary:user];
-        // author values
-        _userId = [user[@"id"] stringValue];
-        _name = user[@"name"];
-        _username = user[@"screen_name"];
-        _avatarURL = [NSURL URLWithString:user[@"profile_image_url"]];
-        
+
         _retweetCount = [dictionary[@"retweet_count"] integerValue];
         _retweetCount = [dictionary[@"favorite_count"] integerValue];
     }
     return self;
-}
-
-- (NSString *)getUsernameLabel
-{
-    return [NSString stringWithFormat:@"@%@", _username];
 }
 
 - (NSString *)timeAgo
@@ -97,7 +87,7 @@
     if (_retweeted) {
         // TODO
     } else {
-        if ([[NSString stringWithFormat:@"%@", [User currentUser].id] isEqualToString:[NSString stringWithFormat:@"%@", _userId]]) {
+        if ([[NSString stringWithFormat:@"%@", [User currentUser].id] isEqualToString:[NSString stringWithFormat:@"%@", _author.id]]) {
             // TODO: ignore for now
         } else {
             [[TwitterClient instance] postRetweet:_id success:^(Tweet *tweet) {

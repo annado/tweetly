@@ -10,6 +10,7 @@
 #import "TwitterClient.h"
 #import "TweetCell.h"
 #import "Tweet.h"
+#import "User.h"
 #import "TimelineViewController.h"
 
 @interface TweetCell ()
@@ -56,11 +57,11 @@
         constraint.constant = 0.f;
     }
     
-    self.nameLabel.text = _tweet.name;
-    self.usernameLabel.text = [_tweet getUsernameLabel];
+    self.nameLabel.text = _tweet.author.name;
+    self.usernameLabel.text = _tweet.author.username;
     self.tweetLabel.text = _tweet.text;
     
-    [self.avatarImageView setImageWithURL:_tweet.avatarURL];
+    [self.avatarImageView setImageWithURL:_tweet.author.avatarURL];
     self.avatarImageView.layer.cornerRadius = 4;
     self.avatarImageView.clipsToBounds = YES;
 
@@ -82,9 +83,7 @@
 
 - (void)onTap:(UITapGestureRecognizer *)tapGestureRecognizer
 {
-    NSLog(@"Tapped on avatar for user: %@", _tweet.username);
     [self.delegate tweetCell:self didSelectProfileForUser:_tweet.author];
-    
 }
 
 static NSInteger TweetLabelMaxWidth = 218;

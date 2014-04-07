@@ -10,6 +10,7 @@
 #import "TweetViewController.h"
 #import "TimelineViewController.h" // TODO: how to get const
 #import "Tweet.h"
+#import "User.h"
 #import "TwitterClient.h"
 
 @interface TweetViewController ()
@@ -56,10 +57,10 @@
             constraint.constant = 0.f;
         }
         
-        self.nameLabel.text = _tweet.name;
-        self.usernameLabel.text = [_tweet getUsernameLabel];
+        self.nameLabel.text = _tweet.author.name;
+        self.usernameLabel.text = _tweet.author.username;
         self.tweetLabel.text = _tweet.text;
-        [self.avatarImageView setImageWithURL:_tweet.avatarURL];
+        [self.avatarImageView setImageWithURL:_tweet.author.avatarURL];
         self.numRetweetsLabel.text = [@(_tweet.retweetCount) stringValue];
         self.numFavoritesLabel.text = [@(_tweet.favoriteCount) stringValue];
         self.timestampLabel.text = _tweet.displayDate;

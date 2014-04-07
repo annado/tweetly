@@ -13,26 +13,21 @@
 @interface Tweet : NSObject
 
 @property (nonatomic, strong, readonly) NSString *id;
-@property (nonatomic, strong, readonly) NSString *userId;
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSString *displayDate;
 @property (nonatomic, strong) NSString *text;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *username;
 @property (nonatomic, assign) NSInteger retweetCount;
 @property (nonatomic, assign) NSInteger favoriteCount;
 @property (nonatomic, assign) BOOL retweet;
 @property (nonatomic, assign) BOOL favorited;
 @property (nonatomic, assign) BOOL retweeted;
 @property (nonatomic, strong, readonly) NSString *retweetLabel;
-@property (nonatomic, strong, readonly) NSURL *avatarURL;
 
 @property (nonatomic, strong) User *author;
 
 + (NSDateFormatter *)dateFormatter;
 + (NSMutableArray *)tweetsWithArray:(NSArray *)array;
 - (id)initWithDictionary:(NSDictionary *)dictionary;
-- (NSString *)getUsernameLabel;
 - (NSString *)timeAgo;
 - (void)retweetWithSuccess:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure;
 - (void)favoriteWithSuccess:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure;
