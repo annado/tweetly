@@ -103,9 +103,13 @@ static NSString *CellIdentifier = @"TweetCell";
 
 - (void)showComposer:(Tweet *)replyTweet
 {
-    ComposeViewController *composeViewController = [[ComposeViewController alloc] init];
+    ComposeViewController *composeViewController;
+    if (replyTweet) {
+        composeViewController = [[ComposeViewController alloc] initWithReply:replyTweet];
+    } else {
+        composeViewController = [[ComposeViewController alloc] init];
+    }
     composeViewController.delegate = self;
-    composeViewController.replyTweet = replyTweet;
     UINavigationController *navigationController = [[UINavigationController alloc]
                                                     initWithRootViewController:composeViewController];
     [self presentViewController:navigationController animated:YES completion: nil];

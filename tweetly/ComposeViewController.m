@@ -32,7 +32,17 @@
         
         UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:@"Tweet" style:UIBarButtonItemStylePlain target:self action:@selector(onTweet:)];
         self.navigationItem.rightBarButtonItem = submitButton;
+    }
+    return self;
+}
 
+- (id)initWithReply:(Tweet *)reply
+{
+    self = [super init];
+    if (self) {
+        _replyTweet = reply;
+        UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(onTweet:)];
+        self.navigationItem.rightBarButtonItem = submitButton;
     }
     return self;
 }
@@ -45,17 +55,6 @@
     [self.composerTextView becomeFirstResponder];
     if (_replyTweet) {
         self.composerTextView.text = [NSString stringWithFormat:@"%@ ", [_replyTweet getUsernameLabel]];
-    }
-}
-
-- (void)setReplyTweet:(Tweet *)replyTweet
-{
-    _replyTweet = replyTweet;
-
-    if (replyTweet) {
-        // TODO: consolidate with init code
-        UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(onTweet:)];
-        self.navigationItem.rightBarButtonItem = submitButton;
     }
 }
 

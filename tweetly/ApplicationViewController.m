@@ -11,6 +11,7 @@
 #import "TimelineViewController.h"
 #import "ProfileViewController.h"
 #import "NSDictionary+BDBOAuth1Manager.h"
+#import "TwitterClient.h"
 #import "User.h"
 
 @interface ApplicationViewController ()
@@ -65,7 +66,15 @@
             NSLog(@"profile for currentUser");
             [_contentView bringSubviewToFront:_profileViewController.view];
         }
+    } else if ([url.host isEqualToString:@"logout"]) {
+        [self logout];
     }
+}
+
+
+- (void)logout
+{
+    [[TwitterClient instance] logout];
 }
 
 

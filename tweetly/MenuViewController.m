@@ -8,7 +8,6 @@
 
 #import "MenuViewController.h"
 #import "MenuItemCell.h"
-#import "TwitterClient.h"
 
 @interface MenuViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -24,13 +23,13 @@ static NSString *CellIdentifier = @"MenuItemCell";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Configure the nav buttons
-        UIBarButtonItem *logOutButton = [[UIBarButtonItem alloc] initWithTitle:@"Log Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogOutButton:)];
-        self.navigationItem.rightBarButtonItem = logOutButton;
-
+        self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TwitterIcon"]];
+        
         self.menuItems = @[
                            @{@"name": @"Profile", @"url":@"tweetly://profile"},
                            @{@"name": @"Timeline", @"url":@"tweetly://timeline"},
-                           @{@"name": @"Mentions", @"url":@"tweetly://mentions"}
+                           @{@"name": @"Mentions", @"url":@"tweetly://mentions"},
+                           @{@"name": @"Log Out", @"url":@"tweetly://logout"}
                            ];
     }
     return self;
@@ -45,9 +44,10 @@ static NSString *CellIdentifier = @"MenuItemCell";
     
 }
 
-- (void)onLogOutButton:(UIBarButtonItem *)button
+- (void)onHomeButton:(UIBarButtonItem *)button
 {
-    [[TwitterClient instance] logout];
+    NSString *urlString = self.menuItems[1][@"url"];
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:urlString]];
 }
 
 #pragma mark TableView delegate methods

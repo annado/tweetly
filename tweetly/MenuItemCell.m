@@ -13,6 +13,9 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    NSLog(@"init MenuItemCell");
+    [self.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:15.0]];
+    [self.textLabel setTextColor:[UIColor darkGrayColor]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

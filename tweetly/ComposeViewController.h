@@ -14,6 +14,7 @@
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, strong) NSString *replyID;
 @property (nonatomic, strong) Tweet *replyTweet;
+- (id)initWithReply:(Tweet *)reply;
 @end
 
 @protocol ComposeViewDelegate <NSObject>
