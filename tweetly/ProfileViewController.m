@@ -55,6 +55,8 @@
     // add rounded corners
     self.profileImageView.layer.cornerRadius = 3;
     self.profileImageView.clipsToBounds = YES;
+    [self.profileImageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+    [self.profileImageView.layer setBorderWidth: 2.0];
     
     self.nameLabel.text = _user.name;
     self.usernameLabel.text = _user.username;
