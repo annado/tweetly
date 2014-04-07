@@ -54,7 +54,7 @@
 
     if (replyTweet) {
         // TODO: consolidate with init code
-        UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(onTweet:)];
+        UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(onTweet:)];
         self.navigationItem.rightBarButtonItem = submitButton;
     }
 }
