@@ -63,6 +63,23 @@
     self.favoriteButton.imageView.image = [self.favoriteButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     self.favoriteButton.tintColor = _tweet.favorited ? self.selectedFavoriteColor : self.defaultButtonColor;
     self.retweetButton.tintColor = _tweet.retweeted ? self.selectedRetweetColor : self.defaultButtonColor;
+    
+    [self setupTapRecognizer];
+}
+
+- (void)setupTapRecognizer
+{
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTap:)];
+    [tap setNumberOfTouchesRequired:1];
+    [tap setNumberOfTapsRequired:1];
+    [self.avatarImageView addGestureRecognizer:tap];
+}
+
+- (void)onTap:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    NSLog(@"Tapped on avatar for user: %@", _tweet.username);
+    [self.delegate tweetCell:self didSelectProfileForUser:_tweet.author];
+    
 }
 
 static NSInteger TweetLabelMaxWidth = 218;

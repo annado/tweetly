@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class User;
+
 @interface Tweet : NSObject
 
 @property (nonatomic, strong, readonly) NSString *id;
@@ -24,6 +26,8 @@
 @property (nonatomic, assign) BOOL retweeted;
 @property (nonatomic, strong, readonly) NSString *retweetLabel;
 @property (nonatomic, strong, readonly) NSURL *avatarURL;
+
+@property (nonatomic, strong) User *author;
 
 + (NSDateFormatter *)dateFormatter;
 + (NSMutableArray *)tweetsWithArray:(NSArray *)array;

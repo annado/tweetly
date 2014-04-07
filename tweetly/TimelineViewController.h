@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ComposeViewController.h"
+#import "TweetCell.h"
 
 extern NSString *const ShowComposerNotification;
 
-@interface TimelineViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ComposeViewDelegate>
+@interface TimelineViewController : UIViewController <UITableViewDataSource,
+    UITableViewDelegate,
+    ComposeViewDelegate,
+    TweetCellDelegate>
 @property (nonatomic, assign) BOOL mentions;
 @end

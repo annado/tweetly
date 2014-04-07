@@ -144,11 +144,19 @@ static NSString *CellIdentifier = @"TweetCell";
     [self dismissViewControllerAnimated:YES completion: nil];
 }
 
+#pragma mark TweetCellProtocol methods
+- (void)tweetCell:(TweetCell *)tweetCell didSelectProfileForUser:(User *)user
+{
+    ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user];
+    [self.navigationController pushViewController:profileViewController animated:YES];
+}
+
 #pragma mark TableView delegate methods
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TweetCell *cell = (TweetCell *)[self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    cell.delegate = self;
     cell.tweet = self.tweets[indexPath.row];
     return cell;
 }

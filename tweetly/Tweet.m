@@ -49,6 +49,9 @@
             user = dictionary[@"user"];
             _retweet = NO;
         }
+        
+        _author = [[User alloc] initWithDictionary:user];
+        // author values
         _userId = [user[@"id"] stringValue];
         _name = user[@"name"];
         _username = user[@"screen_name"];
