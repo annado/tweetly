@@ -122,7 +122,6 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
 {
     NSString *timeline = @"1.1/statuses/home_timeline.json";
     NSDictionary *parameters = @{@"count":@20, @"user_id":user.id};
-    NSLog(@"timeline params: %@", parameters);
     [self GET:timeline
    parameters:parameters
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
