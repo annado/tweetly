@@ -32,7 +32,6 @@ static NSString *CellIdentifier = @"TweetCell";
     if (self) {
         self.title = @"Timeline";
         _tweets = [[NSMutableArray alloc] init];
-        _user = [User currentUser];
 
         // Configure the nav buttons
         UIBarButtonItem *composeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onComposeButton:)];
@@ -97,11 +96,11 @@ static NSString *CellIdentifier = @"TweetCell";
     if (self.mentions) {
         [[TwitterClient instance] mentionsWithSuccess:success failure:failure];
     } else {
-        if (_user == [User currentUser]) {
+        if (_user) {
+            [[TwitterClient instance] timelineForUser:_user success:success failure:failure];
+        } else {
             // get home timeline
             [[TwitterClient instance] timelineWithSuccess:success failure:failure];
-        } else {
-            [[TwitterClient instance] timelineForUser:_user success:success failure:failure];
         }
     }
 }
