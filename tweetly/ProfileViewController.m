@@ -50,7 +50,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"ProfileViewController viewDidLoad");
 
     self.bannerView.user = _user;
     [self.view addSubview:self.bannerView];

@@ -97,7 +97,12 @@ static NSString *CellIdentifier = @"TweetCell";
     if (self.mentions) {
         [[TwitterClient instance] mentionsWithSuccess:success failure:failure];
     } else {
-        [[TwitterClient instance] timelineForUser:_user success:success failure:failure];
+        if (_user == [User currentUser]) {
+            // get home timeline
+            [[TwitterClient instance] timelineWithSuccess:success failure:failure];
+        } else {
+            [[TwitterClient instance] timelineForUser:_user success:success failure:failure];
+        }
     }
 }
 
