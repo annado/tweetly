@@ -10,6 +10,8 @@
 #import "ComposeViewController.h"
 #import "TweetCell.h"
 
+@class User;
+
 extern NSString *const ShowComposerNotification;
 
 @interface TimelineViewController : UIViewController <UITableViewDataSource,
@@ -17,4 +19,6 @@ extern NSString *const ShowComposerNotification;
     ComposeViewDelegate,
     TweetCellDelegate>
 @property (nonatomic, assign) BOOL mentions;
+@property (nonatomic, strong) User *user;
+- (id)initWithUser:(User *)user;
 @end

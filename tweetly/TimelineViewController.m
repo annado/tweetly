@@ -31,14 +31,23 @@ static NSString *CellIdentifier = @"TweetCell";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = @"Timeline";
-        self.tweets = [[NSMutableArray alloc] init];
-        [self loadTweets];
-        
+        _tweets = [[NSMutableArray alloc] init];
+        _user = [User currentUser];
+
         // Configure the nav buttons
         UIBarButtonItem *composeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onComposeButton:)];
         self.navigationItem.rightBarButtonItem = composeButton;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onComposeNotification:) name:ShowComposerNotification object:nil];
 
+    }
+    return self;
+}
+
+- (id)initWithUser:(User *)user
+{
+    self = [super init];
+    if (self) {
+        _user = user;
     }
     return self;
 }
@@ -50,6 +59,7 @@ static NSString *CellIdentifier = @"TweetCell";
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
     [self addRefreshControl];
+    [self loadTweets];
 }
 
 - (void)addRefreshControl
@@ -80,14 +90,14 @@ static NSString *CellIdentifier = @"TweetCell";
         [self.tableView reloadData];
     };
     void (^failure)(NSError *) = ^(NSError *error) {
-        NSLog(@"Failed to get tweets");
+        NSLog(@"Failed to get tweets: %@", error);
         [self.refreshControl endRefreshing];
     };
 
     if (self.mentions) {
         [[TwitterClient instance] mentionsWithSuccess:success failure:failure];
     } else {
-        [[TwitterClient instance] timelineWithSuccess:success failure:failure];
+        [[TwitterClient instance] timelineForUser:_user success:success failure:failure];
     }
 }
 

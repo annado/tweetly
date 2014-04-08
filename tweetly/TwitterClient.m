@@ -118,6 +118,24 @@ static NSString * const kAccessTokenKey = @"kAccessTokenKey";
     }];
 }
 
+- (void)timelineForUser:(User *)user success:(void (^)(NSMutableArray *tweets))success failure:(void (^)(NSError *error))failure
+{
+    NSString *timeline = @"1.1/statuses/home_timeline.json";
+    NSDictionary *parameters = @{@"count":@20, @"user_id":user.id};
+    NSLog(@"timeline params: %@", parameters);
+    [self GET:timeline
+   parameters:parameters
+      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+          NSMutableArray *tweets = (NSMutableArray *)responseObject;
+          success(tweets); // TODO
+      }
+      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          if (failure) {
+              failure(error); // TODO
+          }
+      }];
+}
+
 - (void)timelineWithSuccess:(void (^)(NSMutableArray *tweets))success failure:(void (^)(NSError *error))failure
 {
     NSString *timeline = @"1.1/statuses/home_timeline.json?count=20";

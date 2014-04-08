@@ -18,6 +18,7 @@
 - (void)logIn;
 - (void)logout;
 - (void)oAuthCallbackWithURL:(NSURL *)url;
+- (void)timelineForUser:(User *)user success:(void (^)(NSMutableArray *tweets))success failure:(void (^)(NSError *error))failure;
 - (void)timelineWithSuccess:(void (^)(NSMutableArray *tweets))success failure:(void (^)(NSError *error))failure;
 - (void)mentionsWithSuccess:(void (^)(NSMutableArray *tweets))success failure:(void (^)(NSError *error))failure;
 - (void)postTweet:(NSString *)tweet replyTo:(Tweet *)replyTweet success:(void (^)(Tweet *tweet))success failure:(void (^)(NSError *error))failure;

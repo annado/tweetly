@@ -9,20 +9,17 @@
 #import <ColorUtils/ColorUtils.h>
 #import "ProfileViewController.h"
 #import "ComposeViewController.h"
+#import "TimelineViewController.h"
 #import "ProfileBannerView.h"
 #import "User.h"
 
 @interface ProfileViewController ()
-//@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
-//@property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
-//@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-//@property (weak, nonatomic) IBOutlet UIView *timelineView;
 @property (weak, nonatomic) IBOutlet UILabel *numTweetsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numFollowingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numFollowersLabel;
+@property (weak, nonatomic) IBOutlet UIView *timelineView;
 @property (weak, nonatomic) IBOutlet ProfileBannerView *bannerView;
-//@property (nonatomic, strong) ProfileBannerView *profileBannerView;
+@property (nonatomic, strong) TimelineViewController *timelineViewController;
 @end
 
 @implementation ProfileViewController
@@ -43,6 +40,8 @@
     self = [super init];
     if (self) {
         _user = user;
+        self.timelineViewController = [[TimelineViewController alloc] initWithUser:_user];
+        [self addChildViewController:self.timelineViewController];
         self.title = (_user == [User currentUser]) ? @"Me" : @"Profile";
     }
     return self;
@@ -52,28 +51,16 @@
 {
     [super viewDidLoad];
     NSLog(@"ProfileViewController viewDidLoad");
-//    [self.backgroundImageView setImageWithURL:_user.backgroundURL];
-//    [self.profileImageView setImageWithURL:_user.avatarURL];
-//    // add rounded corners
-//    self.profileImageView.layer.cornerRadius = 3;
-//    self.profileImageView.clipsToBounds = YES;
-//    [self.profileImageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
-//    [self.profileImageView.layer setBorderWidth: 2.0];
-//    
-//    self.nameLabel.text = _user.name;
-//    self.usernameLabel.text = _user.username;
 
-//    UIColor *textColor = [UIColor colorWithString:_user.textHexColor];
-//    self.nameLabel.textColor = textColor;
-//    self.usernameLabel.textColor = textColor;
-
-//    [[NSBundle mainBundle] loadNibNamed:@"ProfileBannerView" owner:self options:nil];
-    
-    // Controller's outlet has been bound during nib loading, so we can access view trough the outlet.
-
-//    self.profileBannerView = [[ProfileBannerView alloc] initWithFrame:self.view.frame];
     self.bannerView.user = _user;
     [self.view addSubview:self.bannerView];
+    
+    self.timelineView = self.timelineViewController.view;
+    CGRect frame = self.timelineView.frame;
+    frame.origin.y = 306;
+    frame.size.height = 262;
+    self.timelineView.frame = frame;
+    [self.view addSubview:self.timelineView];
     
     self.numTweetsLabel.text = [@(_user.tweetCount) stringValue];
     self.numFollowersLabel.text = [@(_user.followerCount) stringValue];
